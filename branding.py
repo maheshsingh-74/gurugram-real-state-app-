@@ -687,14 +687,48 @@ div[data-testid="stFormSubmitButton"] > button:hover {
 
 /* ─── SECTION HEADERS for recommendations ─── */
 .rec-section-header {
-    font-size: 1.15rem; font-weight: 800; color: #ffffff;
-    margin: 1rem 0 0.3rem 0;
+/* ─── GLOBAL SELECTBOX & INPUT CONTROLS ─── */
+div[data-baseweb="select"] > div {
+    background-color: #131f37 !important;
+    border: 1.5px solid #2563eb !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+    transition: all 0.2s ease-in-out !important;
+    min-height: 42px !important;
 }
-.rec-section-note {
-    font-size: 0.88rem; color: #94a3b8; margin-bottom: 0.8rem;
-    line-height: 1.4;
+div[data-baseweb="select"] > div:hover {
+    border-color: #38bdf8 !important;
+    background-color: #182848 !important;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.35) !important;
+}
+div[data-baseweb="select"] span, div[data-baseweb="select"] div {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+div[data-baseweb="select"] svg {
+    fill: #38bdf8 !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+div[data-baseweb="popover"], ul[data-baseweb="menu"] {
+    background-color: #0f172a !important;
+    border: 1.5px solid #38bdf8 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+}
+ul[data-baseweb="menu"] li {
+    color: #f1f5f9 !important;
+    font-weight: 500 !important;
+    padding: 0.6rem 1rem !important;
+}
+ul[data-baseweb="menu"] li:hover,
+ul[data-baseweb="menu"] li[aria-selected="true"] {
+    background-color: #1d4ed8 !important;
+    color: #ffffff !important;
 }
 """
+
 
 
 # ══════════════════════════════════════════════════════════════════════════
