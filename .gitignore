@@ -1,0 +1,25 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+catboost_info/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary & Archive files
+*.zip
+output.txt
+
+# OS Generated
+.DS_Store
+Thumbs.db
