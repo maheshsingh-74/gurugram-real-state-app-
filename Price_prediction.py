@@ -600,6 +600,49 @@ with tab_calc:
             with emi_c3:
                 loan_tenure_years = st.slider("Tenure (Years)", min_value=5, max_value=30, value=20, step=1, key="emi_tenure_slider")
 
+            # Highlighted Buyer Category Dropdown
+            st.markdown(
+                """
+                <style>
+                /* Prominent styling for Buyer Category Selectbox */
+                div[data-testid="stSelectbox"]:has(input[aria-label*="Buyer Category"]) div[data-baseweb="select"] > div,
+                .element-container:has(.buyer-dropdown-highlight) + .element-container div[data-baseweb="select"] > div,
+                div[data-testid="stExpander"] div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+                    background: linear-gradient(135deg, rgba(30, 58, 138, 0.45) 0%, rgba(15, 23, 42, 0.95) 100%) !important;
+                    border: 2px solid #38bdf8 !important;
+                    border-radius: 10px !important;
+                    box-shadow: 0 0 16px rgba(56, 189, 248, 0.3) !important;
+                    transition: all 0.25s ease-in-out !important;
+                }
+                div[data-testid="stExpander"] div[data-testid="stSelectbox"] div[data-baseweb="select"] > div:hover {
+                    border-color: #60a5fa !important;
+                    box-shadow: 0 0 22px rgba(96, 165, 250, 0.5) !important;
+                    background: linear-gradient(135deg, rgba(37, 99, 235, 0.55) 0%, rgba(15, 23, 42, 0.98) 100%) !important;
+                }
+                div[data-testid="stExpander"] div[data-testid="stSelectbox"] div[data-baseweb="select"] span {
+                    color: #ffffff !important;
+                    font-weight: 600 !important;
+                    font-size: 0.96rem !important;
+                }
+                div[data-testid="stExpander"] div[data-testid="stSelectbox"] div[data-baseweb="select"] svg {
+                    fill: #38bdf8 !important;
+                    width: 1.3rem !important;
+                    height: 1.3rem !important;
+                }
+                </style>
+                <div class="buyer-dropdown-highlight" style="display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; margin-bottom: 0.4rem;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.15rem;">🏛️</span>
+                        <span style="font-weight: 700; color: #f8fafc; font-size: 0.95rem;">Buyer Category (Haryana Stamp Duty)</span>
+                    </div>
+                    <span style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.45); color: #38bdf8; padding: 2px 10px; border-radius: 20px; font-size: 0.74rem; font-weight: 600;">
+                        Tap to change rate
+                    </span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
             buyer_gender = st.selectbox(
                 "Buyer Category (Haryana Stamp Duty)",
                 [
@@ -609,6 +652,7 @@ with tab_calc:
                 ],
                 index=0,
                 key="emi_buyer_type",
+                label_visibility="collapsed",
             )
 
             # Financial calculations
