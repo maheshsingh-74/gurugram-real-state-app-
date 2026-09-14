@@ -685,8 +685,6 @@ div[data-testid="stFormSubmitButton"] > button:hover {
     animation: tabFadeIn 0.35s ease-out;
 }
 
-/* ─── SECTION HEADERS for recommendations ─── */
-.rec-section-header {
 /* ─── GLOBAL SELECTBOX & INPUT CONTROLS ─── */
 div[data-baseweb="select"] > div {
     background-color: #131f37 !important;
