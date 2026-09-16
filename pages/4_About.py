@@ -122,18 +122,18 @@ If you spot something off in the data, want to talk about how this was built, or
 col1, col2 = st.columns(2)
 with col1:
     st.markdown(
-        f'<div class="glass-card" style="text-align:center; padding:1.2rem;">'
-        f'<div style="font-size:1.5rem; margin-bottom:0.3rem;">📧</div>'
-        f'<a href="mailto:{YOUR_EMAIL}" style="color:#34d399; text-decoration:none; font-weight:500;">'
+        f'<div class="portal-card" style="text-align:center; padding:1.4rem;">'
+        f'<div style="font-size:1.8rem; margin-bottom:0.4rem;">📧</div>'
+        f'<a href="mailto:{YOUR_EMAIL}" style="color:#1d4ed8; text-decoration:none; font-weight:600; font-size:0.95rem;">'
         f'{YOUR_EMAIL}</a></div>',
         unsafe_allow_html=True,
     )
 with col2:
     st.markdown(
-        f'<div class="glass-card" style="text-align:center; padding:1.2rem;">'
-        f'<div style="font-size:1.5rem; margin-bottom:0.3rem;">💻</div>'
-        f'<a href="{GITHUB_URL}" target="_blank" style="color:#3b82f6; text-decoration:none; font-weight:500;">'
-        f'Project Repo on GitHub</a></div>',
+        f'<div class="portal-card" style="text-align:center; padding:1.4rem;">'
+        f'<div style="font-size:1.8rem; margin-bottom:0.4rem;">💻</div>'
+        f'<a href="{GITHUB_URL}" target="_blank" style="color:#1890ff; text-decoration:none; font-weight:600; font-size:0.95rem;">'
+        f'Project Repo on GitHub →</a></div>',
         unsafe_allow_html=True,
     )
 

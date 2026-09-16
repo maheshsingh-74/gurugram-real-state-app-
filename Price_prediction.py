@@ -219,22 +219,22 @@ def render_shap_waterfall(explainer, preprocessor, input_df, col_label_fn, predi
         pos_items = [(clean_names[i], rupee_impacts[i], pct_impacts[i]) for i in range(len(top_shap_vals)) if top_shap_vals[i] > 0]
         neg_items = [(clean_names[i], rupee_impacts[i], pct_impacts[i]) for i in range(len(top_shap_vals)) if top_shap_vals[i] < 0]
 
-        top_pos_str = f"🟢 <strong>Top Value Driver:</strong> {pos_items[0][0]} adds <strong style='color:#10b981;'>{format_rupee_impact(pos_items[0][1])}</strong>" if pos_items else "No positive drivers"
-        top_neg_str = f"🔴 <strong>Main Value Drag:</strong> {neg_items[0][0]} lowers price by <strong style='color:#ef4444;'>{format_rupee_impact(neg_items[0][1])}</strong>" if neg_items else "No negative drivers"
+        top_pos_str = f"🟢 <strong>Top Value Driver:</strong> {pos_items[0][0]} adds <strong style='color:#16a34a;'>{format_rupee_impact(pos_items[0][1])}</strong>" if pos_items else "No positive drivers"
+        top_neg_str = f"🔴 <strong>Main Value Drag:</strong> {neg_items[0][0]} lowers price by <strong style='color:#dc2626;'>{format_rupee_impact(neg_items[0][1])}</strong>" if neg_items else "No negative drivers"
 
         st.markdown(
-            f'<div style="background:#131d31; border:1px solid #1e293b; border-radius:12px; padding:1rem 1.2rem; margin-bottom:1rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.75rem;">'
+            f'<div style="background:#ffffff; border:1px solid #d8dde6; border-radius:12px; box-shadow:0 2px 8px rgba(15,23,42,0.05); padding:1rem 1.2rem; margin-bottom:1rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.75rem;">'
             f'<div>'
-            f'<div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.04em;">Market Reference Baseline</div>'
-            f'<div style="font-size:1.3rem; font-weight:800; color:#38bdf8;">₹ {base_price:.2f} Cr</div>'
+            f'<div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; letter-spacing:0.04em;">Market Reference Baseline</div>'
+            f'<div style="font-size:1.3rem; font-weight:800; color:#0d9488;">₹ {base_price:.2f} Cr</div>'
             f'</div>'
             f'<div>'
-            f'<div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.04em;">Fair Market Valuation</div>'
-            f'<div style="font-size:1.3rem; font-weight:800; color:#ffffff;">₹ {pred_p:.2f} Cr '
-            f'<span style="font-size:0.9rem; font-weight:600; color:{"#10b981" if price_diff >= 0 else "#ef4444"};">'
+            f'<div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; letter-spacing:0.04em;">Fair Market Valuation</div>'
+            f'<div style="font-size:1.3rem; font-weight:800; color:#1d4ed8;">₹ {pred_p:.2f} Cr '
+            f'<span style="font-size:0.9rem; font-weight:600; color:{"#16a34a" if price_diff >= 0 else "#dc2626"};">'
             f'({("+" if price_diff >= 0 else "")}{price_diff:.2f} Cr)</span></div>'
             f'</div>'
-            f'<div style="flex-basis:100%; border-top:1px solid #1e293b; padding-top:0.6rem; font-size:0.88rem; color:#cbd5e1;">'
+            f'<div style="flex-basis:100%; border-top:1px solid #e2e8f0; padding-top:0.6rem; font-size:0.88rem; color:#334155;">'
             f'{top_pos_str} &nbsp;&bull;&nbsp; {top_neg_str}'
             f'</div>'
             f'</div>',
@@ -250,7 +250,7 @@ def render_shap_waterfall(explainer, preprocessor, input_df, col_label_fn, predi
             key="shap_viz_mode_radio",
         )
 
-        colors = ["#10b981" if v > 0 else "#ef4444" for v in top_shap_vals]
+        colors = ["#16a34a" if v > 0 else "#dc2626" for v in top_shap_vals]
 
         if mode.startswith("💰"):
             x_vals = rupee_impacts
@@ -281,11 +281,11 @@ def render_shap_waterfall(explainer, preprocessor, input_df, col_label_fn, predi
             orientation="h",
             marker=dict(
                 color=colors,
-                line=dict(color="rgba(255,255,255,0.15)", width=1),
+                line=dict(color="rgba(0,0,0,0.08)", width=1),
             ),
             text=text_labels,
             textposition="outside",
-            textfont=dict(size=12, color="#e2e8f0", family="Inter, sans-serif"),
+            textfont=dict(size=12, color="#4a4a68", family="'Inter', sans-serif"),
             customdata=c_data,
             hovertemplate=hover_tmpl,
             cliponaxis=False,
@@ -294,24 +294,24 @@ def render_shap_waterfall(explainer, preprocessor, input_df, col_label_fn, predi
         fig.update_layout(
             title=dict(
                 text="<b>Feature Valuation Drivers</b> — What Made This Property Worth More or Less",
-                font=dict(size=15, color="#ffffff"),
+                font=dict(size=15, color="#1a1a2e"),
             ),
             xaxis_title=x_axis_title,
             yaxis=dict(
                 categoryorder="array",
                 categoryarray=list(reversed(clean_names)),
-                tickfont=dict(color="#f1f5f9", size=12),
+                tickfont=dict(color="#1a1a2e", size=12),
             ),
             xaxis=dict(
-                tickfont=dict(color="#94a3b8", size=11),
-                gridcolor="#1e293b",
-                zerolinecolor="#475569",
+                tickfont=dict(color="#6b7280", size=11),
+                gridcolor="#e5e7eb",
+                zerolinecolor="#d1d5db",
                 zerolinewidth=2,
                 range=x_range,
             ),
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#94a3b8", family="Inter, sans-serif"),
+            font=dict(color="#4a4a68", family="'Inter', sans-serif"),
             height=460,
             margin=dict(l=10, r=40, t=50, b=40),
         )
@@ -603,45 +603,12 @@ with tab_calc:
             # Highlighted Buyer Category Dropdown
             st.markdown(
                 """
-                <style>
-                /* Prominent styling for Buyer Category Selectbox */
-                div[data-testid="stExpanderDetails"] div[data-baseweb="select"] > div,
-                div[data-testid="stExpander"] div[data-baseweb="select"] > div,
-                details div[data-baseweb="select"] > div {
-                    background: linear-gradient(135deg, #162a4d 0%, #0f1c33 100%) !important;
-                    border: 2px solid #38bdf8 !important;
-                    border-radius: 10px !important;
-                    box-shadow: 0 4px 18px rgba(56, 189, 248, 0.3) !important;
-                    transition: all 0.2s ease-in-out !important;
-                }
-                div[data-testid="stExpanderDetails"] div[data-baseweb="select"] > div:hover,
-                div[data-testid="stExpander"] div[data-baseweb="select"] > div:hover,
-                details div[data-baseweb="select"] > div:hover {
-                    border-color: #60a5fa !important;
-                    box-shadow: 0 6px 24px rgba(96, 165, 250, 0.5) !important;
-                    background: linear-gradient(135deg, #1d3560 0%, #132442 100%) !important;
-                }
-                div[data-testid="stExpanderDetails"] div[data-baseweb="select"] span,
-                div[data-testid="stExpander"] div[data-baseweb="select"] span,
-                details div[data-baseweb="select"] span {
-                    color: #ffffff !important;
-                    font-weight: 700 !important;
-                    font-size: 0.98rem !important;
-                }
-                div[data-testid="stExpanderDetails"] div[data-baseweb="select"] svg,
-                div[data-testid="stExpander"] div[data-baseweb="select"] svg,
-                details div[data-baseweb="select"] svg {
-                    fill: #38bdf8 !important;
-                    width: 22px !important;
-                    height: 22px !important;
-                }
-                </style>
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.2rem; margin-bottom: 0.4rem;">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 1.2rem;">🏛️</span>
-                        <span style="font-weight: 700; color: #ffffff; font-size: 1rem;">Buyer Category (Haryana Stamp Duty)</span>
+                        <span style="font-weight: 700; color: #0f172a; font-size: 1rem;">Buyer Category (Haryana Stamp Duty)</span>
                     </div>
-                    <span style="background: rgba(56, 189, 248, 0.2); border: 1.5px solid #38bdf8; color: #38bdf8; padding: 3px 12px; border-radius: 20px; font-size: 0.76rem; font-weight: 700;">
+                    <span style="background: #eff6ff; border: 1.5px solid #bfdbfe; color: #1d4ed8; padding: 3px 12px; border-radius: 20px; font-size: 0.76rem; font-weight: 700;">
                         Tap to change rate
                     </span>
                 </div>
@@ -692,13 +659,13 @@ with tab_calc:
                 labels=["Loan Principal", "Total Interest Payable", "Down Payment", "Haryana Stamp Duty & Reg"],
                 values=[loan_amount_inr, total_interest_inr, down_payment_inr, stamp_duty_inr],
                 hole=0.55,
-                marker_colors=["#2563eb", "#f59e0b", "#10b981", "#ec4899"],
+                marker_colors=["#1d4ed8", "#0d9488", "#d97706", "#7c3aed"],
             )])
             donut_fig.update_layout(
-                title=dict(text="<b>Total Cost & Financing Breakdown</b>", font=dict(size=14, color="#ffffff")),
+                title=dict(text="<b>Total Cost & Financing Breakdown</b>", font=dict(size=14, color="#0f172a")),
                 paper_bgcolor="rgba(0,0,0,0)",
                 plot_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="#94a3b8", family="Inter, sans-serif"),
+                font=dict(color="#334155", family="'Inter', sans-serif"),
                 height=320,
                 margin=dict(l=10, r=10, t=40, b=20),
                 legend=dict(orientation="h", y=-0.1),
@@ -751,12 +718,12 @@ with tab_calc:
         st.markdown(
             '<div class="portal-card" style="text-align:center; padding:2.2rem 1.5rem;">'
             '<div style="font-size:2.8rem; margin-bottom:0.6rem;">🏢</div>'
-            '<div style="font-size:1.15rem; font-weight:700; color:#ffffff; margin-bottom:0.3rem;">'
+            '<div style="font-size:1.15rem; font-weight:700; color:#0f172a; margin-bottom:0.3rem;">'
             'Ready to calculate Gurugram property valuation'
             '</div>'
-            '<div style="color:#94a3b8; font-size:0.95rem; max-width:520px; margin:0 auto;">'
+            '<div style="color:#64748b; font-size:0.95rem; max-width:520px; margin:0 auto;">'
             'Select your preferred sector, configuration, and area above, then click '
-            '<strong style="color:#38bdf8;">Check Estimated Market Price</strong> for an instant valuation.'
+            '<strong style="color:#1d4ed8;">Check Estimated Market Price</strong> for an instant valuation.'
             '</div></div>',
             unsafe_allow_html=True,
         )
@@ -790,7 +757,7 @@ with tab_trends:
             fig = px.bar(
                 top15, x="mean", y="sector", orientation="h",
                 labels={"mean": "Avg Price (Cr)", "sector": ""},
-                color="mean", color_continuous_scale=["#1d4ed8", "#38bdf8"],
+                color="mean", color_continuous_scale=["#bfdbfe", "#1d4ed8"],
             )
             layout_args = {**PLOTLY_LAYOUT, "height": 490, "coloraxis_showscale": False, "margin": dict(l=20, r=20, t=20, b=20)}
             layout_args["yaxis"] = {**PLOTLY_LAYOUT.get("yaxis", {}), "categoryorder": "total ascending"}
@@ -811,30 +778,30 @@ with tab_trends:
             avg_area = sec_properties["built_up_area"].mean() if "built_up_area" in sec_properties else 0
 
             st.markdown(f"""
-            <div class="portal-card" style="padding:1.4rem; border-left: 4px solid #38bdf8;">
-                <div style="font-size:1.25rem; font-weight:800; color:#ffffff; margin-bottom:0.6rem;">
+            <div class="portal-card" style="padding:1.4rem; border-left: 4px solid #1d4ed8;">
+                <div style="font-size:1.25rem; font-weight:800; color:#0f172a; margin-bottom:0.6rem;">
                     📍 {selected_sector.title()}
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.9rem; margin-top:0.8rem;">
                     <div>
-                        <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase;">Average Price</div>
-                        <div style="font-size:1.4rem; font-weight:800; color:#38bdf8;">₹ {sec_row['mean']:.2f} Cr</div>
+                        <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase;">Average Price</div>
+                        <div style="font-size:1.4rem; font-weight:800; color:#1d4ed8;">₹ {sec_row['mean']:.2f} Cr</div>
                     </div>
                     <div>
-                        <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase;">Median Price</div>
-                        <div style="font-size:1.4rem; font-weight:800; color:#ffffff;">₹ {sec_row['median']:.2f} Cr</div>
+                        <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase;">Median Price</div>
+                        <div style="font-size:1.4rem; font-weight:800; color:#0f172a;">₹ {sec_row['median']:.2f} Cr</div>
                     </div>
                     <div>
-                        <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase;">Price Range</div>
-                        <div style="font-size:1.05rem; font-weight:700; color:#cbd5e1;">₹ {sec_row['min']:.2f} - {sec_row['max']:.2f} Cr</div>
+                        <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase;">Price Range</div>
+                        <div style="font-size:1.05rem; font-weight:700; color:#334155;">₹ {sec_row['min']:.2f} - {sec_row['max']:.2f} Cr</div>
                     </div>
                     <div>
-                        <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase;">Listings Analyzed</div>
-                        <div style="font-size:1.05rem; font-weight:700; color:#cbd5e1;">{int(sec_row['count'])} properties</div>
+                        <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase;">Listings Analyzed</div>
+                        <div style="font-size:1.05rem; font-weight:700; color:#334155;">{int(sec_row['count'])} properties</div>
                     </div>
                 </div>
-                <div style="margin-top:1rem; padding-top:0.8rem; border-top:1px solid #1e293b; font-size:0.85rem; color:#94a3b8;">
-                    📐 Avg Built-up Area: <strong style="color:#ffffff;">{avg_area:,.0f} sq ft</strong>
+                <div style="margin-top:1rem; padding-top:0.8rem; border-top:1px solid #e2e8f0; font-size:0.85rem; color:#64748b;">
+                    📐 Avg Built-up Area: <strong style="color:#0f172a;">{avg_area:,.0f} sq ft</strong>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -1030,10 +997,10 @@ with tab_batch:
         st.markdown(
             '<div class="portal-card" style="text-align:center; padding:2.2rem 1.5rem;">'
             '<div style="font-size:2.8rem; margin-bottom:0.6rem;">📤</div>'
-            '<div style="font-size:1.15rem; font-weight:700; color:#ffffff; margin-bottom:0.3rem;">'
+            '<div style="font-size:1.15rem; font-weight:700; color:#1a1a2e; margin-bottom:0.3rem;">'
             'Upload a CSV to get started'
             '</div>'
-            '<div style="color:#94a3b8; font-size:0.95rem; max-width:520px; margin:0 auto;">'
+            '<div style="color:#6b7280; font-size:0.95rem; max-width:520px; margin:0 auto;">'
             'Download the template above, fill in your property data, and upload it here '
             'for instant batch predictions with downloadable reports.'
             '</div></div>',
@@ -1044,10 +1011,10 @@ render_gradient_divider()
 
 # ── Model Insights CTA Banner ─────────────────────────────────────────────
 st.markdown("""
-<div class="portal-card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; padding:1.4rem 1.8rem; margin-top:1.5rem;">
+<div class="portal-card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; padding:1.4rem 1.8rem; margin-top:1.5rem; border-left: 4px solid #1d4ed8;">
     <div>
-        <div style="font-size:1.15rem; font-weight:800; color:#ffffff;">🔬 Deep Dive into Model Performance & Explainability</div>
-        <div style="color:#94a3b8; font-size:0.9rem; margin-top:0.3rem;">
+        <div style="font-size:1.15rem; font-weight:800; color:#0f172a;">🔬 Deep Dive into Model Performance & Explainability</div>
+        <div style="color:#64748b; font-size:0.9rem; margin-top:0.3rem;">
             Inspect our audited <strong>R² = 0.927</strong> score, 10-fold cross-validation results, global SHAP feature importance, and end-to-end pipeline architecture.
         </div>
     </div>

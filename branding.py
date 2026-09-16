@@ -1,12 +1,13 @@
 """
 Design system and shared branding for EstateIQ Gurugram — Real Estate Intelligence Portal.
 
-Modern dark-mode portal aesthetics inspired by leading market real estate platforms:
-- Canvas: Deep luxury midnight canvas (#0b0f19)
-- Cards & Surfaces: Sleek dark slate surfaces (#131d31) with crisp borders (#1e293b)
-- Brand Primary: Vibrant Royal Blue & Azure (#2563eb / #38bdf8)
-- Headings & Text: High-contrast crisp white (#ffffff / #f8fafc) and muted slate (#94a3b8)
-- Badges: Translucent neon-accent pills with glowing borders
+Professional proptech aesthetics with soothing soft-slate canvas and authoritative sapphire navy:
+- Canvas: Soft Warm Slate (#edf0f5) — eye-friendly, comfortable contrast, not blinding white
+- Cards & Surfaces: Clean white (#ffffff) with refined slate borders (#d8dde6)
+- Brand Primary: Deep Sapphire Blue (#1d4ed8 / #1e3a8a)
+- Secondary Accent: Forest Teal (#0d9488) & Warm Amber (#d97706)
+- Headings & Text: Deep Slate (#0f172a) and soft slate gray (#334155 / #64748b)
+- Badges: Soft pastel backgrounds with gentle borders
 
 Exported helpers
 ────────────────
@@ -15,7 +16,7 @@ Exported helpers
   render_gradient_divider()    → Styled separator
   render_footer()              → Portal footer
   render_kpi_cards(kpis)       → Row of metric stat cards
-  render_prediction_result()   → Valuation panel (without R2/MAE)
+  render_prediction_result()   → Valuation panel
   render_rec_card()            → Property listing card
   render_feature_cards()       → Feature showcase grid
   col_label(name)              → Human-readable column label
@@ -50,18 +51,18 @@ def col_label(name):
     return COLUMN_LABELS.get(name, name.replace("_", " ").title())
 
 
-# ── Plotly portal dark template ───────────────────────────────────────────
+# ── Plotly professional light template ────────────────────────────────────
 
 PLOTLY_LAYOUT = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#94a3b8", family="'Inter', 'Open Sans', sans-serif", size=13),
-    xaxis=dict(gridcolor="#1e293b", zerolinecolor="#334155", tickfont=dict(color="#94a3b8")),
-    yaxis=dict(gridcolor="#1e293b", zerolinecolor="#334155", tickfont=dict(color="#94a3b8")),
-    colorway=["#38bdf8", "#2563eb", "#f59e0b", "#10b981", "#8b5cf6",
-              "#06b6d4", "#f97316", "#14b8a6", "#6366f1", "#ec4899"],
+    font=dict(color="#334155", family="'Inter', 'Open Sans', sans-serif", size=13),
+    xaxis=dict(gridcolor="#e2e8f0", zerolinecolor="#cbd5e1", tickfont=dict(color="#64748b")),
+    yaxis=dict(gridcolor="#e2e8f0", zerolinecolor="#cbd5e1", tickfont=dict(color="#64748b")),
+    colorway=["#1d4ed8", "#0d9488", "#d97706", "#7c3aed", "#2563eb",
+              "#059669", "#dc2626", "#475569", "#0284c7", "#ca8a04"],
     margin=dict(l=40, r=20, t=40, b=40),
-    hoverlabel=dict(bgcolor="#131d31", font_color="#ffffff", bordercolor="#38bdf8"),
+    hoverlabel=dict(bgcolor="#ffffff", font_color="#0f172a", bordercolor="#1d4ed8"),
 )
 
 
@@ -70,34 +71,34 @@ PLOTLY_LAYOUT = dict(
 ICON_SVG = """
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="38" height="38">
   <defs>
-    <linearGradient id="eqDarkGrad" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="eqGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#1d4ed8"/>
-      <stop offset="100%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#2563eb"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="96" height="96" rx="16" fill="url(#eqDarkGrad)"/>
+  <rect x="0" y="0" width="96" height="96" rx="16" fill="url(#eqGrad)"/>
   <path d="M48 20 L76 42 L68 42 L68 76 L28 76 L28 42 L20 42 Z" fill="#ffffff" opacity="0.95"/>
-  <rect x="42" y="52" width="12" height="24" rx="2" fill="#0f172a"/>
-  <circle cx="58" cy="38" r="4" fill="#38bdf8"/>
+  <rect x="42" y="52" width="12" height="24" rx="2" fill="#1d4ed8"/>
+  <circle cx="58" cy="38" r="4" fill="#ffffff"/>
 </svg>
 """
 
 LOGO_SVG = """
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 84" width="290" height="68">
   <defs>
-    <linearGradient id="logoDarkGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1e40af"/>
-      <stop offset="100%" stop-color="#2563eb"/>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="2" width="80" height="80" rx="14" fill="url(#logoDarkGrad)"/>
+  <rect x="0" y="2" width="80" height="80" rx="14" fill="url(#logoGrad)"/>
   <path d="M40 18 L66 38 L58 38 L58 68 L22 68 L22 38 L14 38 Z" fill="#ffffff"/>
-  <rect x="34" y="46" width="12" height="22" rx="2" fill="#0f172a"/>
-  <circle cx="50" cy="32" r="3.5" fill="#38bdf8"/>
+  <rect x="34" y="46" width="12" height="22" rx="2" fill="#1d4ed8"/>
+  <circle cx="50" cy="32" r="3.5" fill="#ffffff"/>
   <text x="96" y="46" font-family="'Inter', 'Open Sans', sans-serif"
-        font-size="29" font-weight="800" fill="#ffffff" letter-spacing="-0.5">EstateIQ</text>
+        font-size="29" font-weight="800" fill="#0f172a" letter-spacing="-0.5">EstateIQ</text>
   <text x="97" y="66" font-family="'Inter', sans-serif"
-        font-size="10" font-weight="700" letter-spacing="2.2" fill="#38bdf8">REAL ESTATE INTELLIGENCE</text>
+        font-size="10" font-weight="700" letter-spacing="2.2" fill="#1d4ed8">REAL ESTATE INTELLIGENCE</text>
 </svg>
 """
 
@@ -117,21 +118,21 @@ def _image_to_base64(path):
     return f"data:image/{mime};base64,{data}"
 
 
-# ── CSS design system (Dark Portal Edition — v2 with image heroes) ────────
+# ── CSS design system (Light Professional Edition — Housing.com inspired) ─
 
 DESIGN_CSS = """
-/* ─── BASE STYLING (DARK PORTAL) ─── */
+/* ─── BASE STYLING (SOOTHING SOFT-SLATE & SAPPHIRE NAVY) ─── */
 html, body, [class*="css"] {
     font-family: 'Inter', 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    background-color: #0b0f19 !important;
-    color: #f8fafc !important;
+    background-color: #edf0f5 !important;
+    color: #0f172a !important;
 }
 
 h1, h2, h3, h4, h5 {
     font-family: 'Inter', 'Open Sans', sans-serif !important;
     font-weight: 700 !important;
-    color: #ffffff !important;
-    letter-spacing: -0.015em;
+    color: #0f172a !important;
+    letter-spacing: -0.01em;
 }
 
 #MainMenu { visibility: hidden; }
@@ -139,66 +140,67 @@ footer { visibility: hidden; }
 
 /* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #0b0f19; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #475569; }
+::-webkit-scrollbar-track { background: #e2e8f0; }
+::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #64748b; }
 
-/* ─── SIDEBAR (DARK PORTAL) ─── */
+/* ─── SIDEBAR (SOFT SLATE) ─── */
 [data-testid="stSidebar"] {
-    background: #0d1322 !important;
-    border-right: 1px solid #1e293b !important;
-    box-shadow: 4px 0 20px rgba(0,0,0,0.5) !important;
+    background: #f4f6f9 !important;
+    border-right: 1px solid #d8dde6 !important;
+    box-shadow: 2px 0 10px rgba(15, 23, 42, 0.04) !important;
 }
 [data-testid="stSidebarNav"] a {
-    font-size: 0.98rem !important;
+    font-size: 0.95rem !important;
     font-weight: 600 !important;
-    padding: 0.65rem 0.9rem !important;
-    border-radius: 6px !important;
+    padding: 0.6rem 0.9rem !important;
+    border-radius: 8px !important;
     transition: all 0.2s ease !important;
-    color: #94a3b8 !important;
+    color: #334155 !important;
 }
 [data-testid="stSidebarNav"] a:hover {
-    background: rgba(37, 99, 255, 0.12) !important;
-    color: #38bdf8 !important;
+    background: #e0e7ff !important;
+    color: #1d4ed8 !important;
 }
-[data-testid="stSidebarNav"] li { margin-bottom: 0.2rem; }
+[data-testid="stSidebarNav"] li { margin-bottom: 0.15rem; }
 
 .sidebar-brand {
     display: flex; align-items: center; gap: 0.75rem;
     padding: 0.8rem 0; margin-bottom: 0.5rem;
-    border-bottom: 1px solid #1e293b;
+    border-bottom: 1px solid #e2e8f0;
 }
 .sidebar-brand-name {
     font-family: 'Inter', sans-serif !important;
     font-weight: 800; font-size: 1.25rem;
-    color: #ffffff;
+    color: #0f172a;
 }
 .sidebar-caption {
-    color: #38bdf8; font-size: 0.72rem; margin-top: -0.1rem;
-    font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    color: #1d4ed8; font-size: 0.72rem; margin-top: -0.1rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
 }
 
-/* ─── HERO IMAGE BANNER (99acres-style) ─── */
+/* ─── HERO IMAGE BANNER ─── */
 .hero-image-wrap {
     position: relative;
     width: 100%;
-    min-height: 340px;
+    min-height: 320px;
     border-radius: 16px;
     overflow: hidden;
     margin-bottom: 1.8rem;
     background-size: cover;
     background-position: center 40%;
     background-repeat: no-repeat;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .hero-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
         180deg,
-        rgba(11, 15, 25, 0.35) 0%,
-        rgba(11, 15, 25, 0.55) 40%,
-        rgba(11, 15, 25, 0.92) 100%
+        rgba(15, 23, 42, 0.2) 0%,
+        rgba(15, 23, 42, 0.45) 45%,
+        rgba(15, 23, 42, 0.8) 100%
     );
     z-index: 1;
 }
@@ -209,13 +211,13 @@ footer { visibility: hidden; }
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    min-height: 340px;
+    min-height: 320px;
 }
 .hero-badge-pill {
     display: inline-flex; align-items: center; gap: 0.4rem;
-    background: rgba(56, 189, 248, 0.15);
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    color: #38bdf8; padding: 0.35rem 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff; padding: 0.35rem 1rem;
     border-radius: 20px; font-size: 0.82rem; font-weight: 600;
     margin-bottom: 0.8rem;
     width: fit-content;
@@ -223,50 +225,50 @@ footer { visibility: hidden; }
     -webkit-backdrop-filter: blur(8px);
 }
 .hero-page-title {
-    font-size: 2.6rem; font-weight: 800;
+    font-size: 2.4rem; font-weight: 800;
     color: #ffffff !important; margin: 0 0 0.5rem 0;
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
     line-height: 1.15;
 }
 .hero-tagline {
-    color: #e2e8f0; font-size: 1.08rem;
+    color: #f1f5f9; font-size: 1.05rem;
     margin: 0; max-width: 680px; line-height: 1.6;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 .hero-stats-row {
-    display: flex; gap: 2rem; margin-top: 1.2rem;
+    display: flex; gap: 1.5rem; margin-top: 1.2rem;
     flex-wrap: wrap;
 }
 .hero-stat {
     display: flex; flex-direction: column;
-    padding: 0.6rem 1rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.5rem 0.9rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 10px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    min-width: 120px;
+    min-width: 110px;
 }
 .hero-stat-value {
-    font-size: 1.4rem; font-weight: 800; color: #ffffff;
+    font-size: 1.3rem; font-weight: 800; color: #ffffff;
     line-height: 1.2;
 }
 .hero-stat-label {
-    font-size: 0.75rem; color: #94a3b8; font-weight: 600;
+    font-size: 0.72rem; color: rgba(255,255,255,0.85); font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.04em;
-    margin-top: 0.15rem;
+    margin-top: 0.1rem;
 }
 
 /* ─── FALLBACK HERO (no image) ─── */
 .hero-portal-wrap {
-    background: linear-gradient(135deg, #091328 0%, #0f2756 50%, #1a4494 100%);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #2563eb 100%);
+    border: none;
     border-radius: 16px;
     padding: 2.2rem 1.8rem 2rem 1.8rem;
     margin-bottom: 1.8rem;
     color: #ffffff;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 6px 24px rgba(29, 78, 216, 0.25);
     position: relative;
     overflow: hidden;
 }
@@ -274,28 +276,29 @@ footer { visibility: hidden; }
     content: '';
     position: absolute; right: -40px; bottom: -40px;
     width: 240px; height: 240px;
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
     border-radius: 50%; pointer-events: none;
 }
 
 /* ─── NAVIGATION TABS BAR ─── */
 .search-tabs-bar {
     display: flex; gap: 0.5rem; margin-bottom: 1.2rem;
-    border-bottom: 2px solid #1e293b; padding-bottom: 0.5rem;
+    border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem;
 }
 .search-tab-item {
-    font-size: 0.92rem; font-weight: 700; color: #94a3b8;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid transparent;
+    font-size: 0.92rem; font-weight: 600; color: #64748b;
+    background: transparent;
+    border: none;
     padding: 0.45rem 1rem; border-radius: 6px; cursor: default;
     transition: all 0.2s ease;
 }
 .search-tab-item:hover {
-    color: #f8fafc; background: rgba(255, 255, 255, 0.06);
+    color: #1d4ed8; background: #e0e7ff;
 }
 .search-tab-item.active {
-    color: #38bdf8; background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #1d4ed8; background: #e0e7ff;
+    border-bottom: 2px solid #1d4ed8;
+    font-weight: 700;
 }
 
 /* ─── FEATURE SHOWCASE CARDS ─── */
@@ -316,18 +319,18 @@ footer { visibility: hidden; }
 }
 .feature-card {
     position: relative;
-    border-radius: 14px;
+    border-radius: 12px;
     overflow: hidden;
-    background: #131d31;
-    border: 1px solid #1e293b;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #ffffff;
+    border: 1px solid #d8dde6;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+    transition: all 0.25s ease;
     cursor: pointer;
 }
 .feature-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 48px rgba(37, 99, 235, 0.25);
-    border-color: rgba(56, 189, 248, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+    border-color: #1d4ed8;
 }
 .feature-card-link {
     text-decoration: none !important;
@@ -341,124 +344,113 @@ footer { visibility: hidden; }
     height: 160px;
     object-fit: cover;
     display: block;
-    filter: brightness(0.7);
-    transition: filter 0.3s ease;
+    transition: transform 0.3s ease;
 }
 .feature-card:hover .feature-card-image {
-    filter: brightness(0.85);
+    transform: scale(1.03);
 }
 .feature-card-body {
-    padding: 1.2rem 1.3rem 1.3rem 1.3rem;
+    padding: 1.1rem 1.2rem 1.2rem 1.2rem;
 }
 .feature-card-icon {
-    font-size: 1.8rem;
-    margin-bottom: 0.4rem;
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
 }
 .feature-card-title {
-    font-size: 1.12rem; font-weight: 800; color: #ffffff;
+    font-size: 1.05rem; font-weight: 700; color: #0f172a;
     margin-bottom: 0.3rem;
 }
 .feature-card-desc {
-    font-size: 0.88rem; color: #94a3b8; line-height: 1.5;
+    font-size: 0.86rem; color: #475569; line-height: 1.5;
 }
 .feature-card-tag {
     display: inline-block;
-    margin-top: 0.8rem;
-    background: rgba(37, 99, 235, 0.18);
-    color: #60a5fa;
-    padding: 0.3rem 0.85rem;
+    margin-top: 0.7rem;
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 0.25rem 0.75rem;
     border-radius: 6px;
     font-size: 0.8rem;
     font-weight: 700;
-    border: 1px solid rgba(37, 99, 235, 0.3);
-    letter-spacing: 0.03em;
+    border: 1px solid #bfdbfe;
+    letter-spacing: 0.02em;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 .feature-card:hover .feature-card-tag {
-    background: #2563eb;
+    background: #1d4ed8;
     color: #ffffff;
-    border-color: #3b82f6;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.5);
+    border-color: #1d4ed8;
 }
 
-/* ─── CLEAN DARK CARDS ─── */
+/* ─── CARDS & SURFACES ─── */
 .glass-card, .portal-card {
-    background: #131d31 !important;
-    border: 1px solid #1e293b !important;
-    border-radius: 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #d8dde6 !important;
+    border-radius: 12px !important;
     padding: 1.5rem !important;
     margin-bottom: 1.2rem !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .glass-card:hover, .portal-card:hover {
-    border-color: #3b82f6 !important;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.2) !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.09) !important;
 }
 
 /* ─── VALUATION / PREDICTION PANEL ─── */
 .prediction-panel {
-    background: #131d31 !important;
-    border: 2px solid #2563eb !important;
-    border-radius: 14px !important;
+    background: #ffffff !important;
+    border: 1px solid #d8dde6 !important;
+    border-top: 4px solid #1d4ed8 !important;
+    border-radius: 12px !important;
     padding: 2.4rem 1.8rem !important;
     text-align: center;
     margin: 1.6rem 0 !important;
-    box-shadow: 0 8px 40px rgba(37, 99, 235, 0.25),
-                0 0 60px rgba(37, 99, 235, 0.08) !important;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.07) !important;
     position: relative;
     overflow: hidden;
 }
-.prediction-panel::before {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle at 50% 100%, rgba(37, 99, 235, 0.06) 0%, transparent 50%);
-    pointer-events: none;
-}
 .prediction-header-badge {
     display: inline-block;
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    background: #1d4ed8;
     color: #ffffff;
     padding: 0.35rem 1.2rem; border-radius: 6px;
     font-size: 0.8rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.08em;
     margin-bottom: 0.8rem;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 .price-label {
-    font-size: 0.9rem; color: #94a3b8; font-weight: 600;
+    font-size: 0.88rem; color: #64748b; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem;
 }
 .price-main {
-    font-size: 3.4rem; font-weight: 800;
-    color: #ffffff !important; line-height: 1.15;
+    font-size: 3.2rem; font-weight: 800;
+    color: #0f172a !important; line-height: 1.15;
     letter-spacing: -0.02em; margin: 0.2rem 0;
 }
 .price-per-sqft {
     display: inline-block;
-    background: rgba(37, 99, 235, 0.18); color: #60a5fa;
+    background: #eff6ff; color: #1d4ed8;
     padding: 0.4rem 1rem; border-radius: 6px;
     font-size: 0.95rem; font-weight: 700; margin: 0.4rem 0 1.2rem 0;
-    border: 1px solid rgba(37, 99, 235, 0.35);
+    border: 1px solid #bfdbfe;
 }
 .price-range {
     display: flex; justify-content: center; gap: 3rem; margin-top: 1rem;
-    padding-top: 1rem; border-top: 1px solid #1e293b;
+    padding-top: 1rem; border-top: 1px solid #e2e8f0;
 }
 .price-range-item { text-align: center; }
 .price-range-value {
-    font-size: 1.35rem; font-weight: 700; color: #38bdf8;
+    font-size: 1.3rem; font-weight: 700; color: #1d4ed8;
 }
 .price-range-label {
-    font-size: 0.82rem; color: #94a3b8; margin-top: 0.2rem; font-weight: 600;
+    font-size: 0.82rem; color: #64748b; margin-top: 0.2rem; font-weight: 600;
 }
 
 /* ─── KPI METRICS with animation ─── */
 @keyframes kpiSlideUp {
-    from { opacity: 0; transform: translateY(18px); }
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 .kpi-row {
@@ -467,266 +459,269 @@ footer { visibility: hidden; }
     gap: 1rem; margin-bottom: 1.8rem;
 }
 .kpi-card {
-    background: #131d31;
-    border: 1px solid #1e293b;
-    border-top: 3px solid #38bdf8;
-    border-radius: 10px; padding: 1.2rem 1rem; text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
-    animation: kpiSlideUp 0.5s ease-out both;
+    background: #ffffff;
+    border: 1px solid #d8dde6;
+    border-top: 3px solid #1d4ed8;
+    border-radius: 10px; padding: 1.1rem 1rem; text-align: center;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: kpiSlideUp 0.4s ease-out both;
 }
 .kpi-card:nth-child(1) { animation-delay: 0s; }
-.kpi-card:nth-child(2) { animation-delay: 0.08s; }
-.kpi-card:nth-child(3) { animation-delay: 0.16s; }
-.kpi-card:nth-child(4) { animation-delay: 0.24s; }
+.kpi-card:nth-child(2) { animation-delay: 0.06s; border-top-color: #0d9488; }
+.kpi-card:nth-child(3) { animation-delay: 0.12s; border-top-color: #d97706; }
+.kpi-card:nth-child(4) { animation-delay: 0.18s; border-top-color: #7c3aed; }
 .kpi-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-    border-top-color: #60a5fa;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
 }
-.kpi-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+.kpi-icon { font-size: 1.4rem; margin-bottom: 0.3rem; }
 .kpi-value {
-    font-size: 1.6rem; font-weight: 800; color: #ffffff; line-height: 1.2;
+    font-size: 1.5rem; font-weight: 800; color: #0f172a; line-height: 1.2;
 }
 .kpi-label {
-    font-size: 0.82rem; color: #94a3b8; margin-top: 0.3rem; font-weight: 600;
+    font-size: 0.8rem; color: #64748b; margin-top: 0.3rem; font-weight: 600;
 }
 
 /* ─── RECOMMENDATION LISTING CARDS ─── */
 @keyframes recCardSlideIn {
-    from { opacity: 0; transform: translateX(-12px); }
+    from { opacity: 0; transform: translateX(-8px); }
     to   { opacity: 1; transform: translateX(0); }
 }
 .rec-card {
-    background: #131d31;
-    border: 1px solid #1e293b;
-    border-radius: 10px; padding: 1.25rem 1.4rem; margin-bottom: 0.85rem;
-    border-left: 5px solid #2563eb;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
-    animation: recCardSlideIn 0.4s ease-out both;
+    background: #ffffff;
+    border: 1px solid #d8dde6;
+    border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 0.8rem;
+    border-left: 4px solid #1d4ed8;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: recCardSlideIn 0.35s ease-out both;
 }
 .rec-card:hover {
-    transform: translateX(6px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    border-color: #3b82f6;
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
-.rec-card.type-location  { border-left-color: #38bdf8; }
-.rec-card.type-budget    { border-left-color: #f59e0b; }
-.rec-card.type-config    { border-left-color: #10b981; }
-.rec-card.type-landmark  { border-left-color: #8b5cf6; }
-.rec-card.type-match     { border-left-color: #2563eb; }
+.rec-card.type-location  { border-left-color: #2563eb; }
+.rec-card.type-budget    { border-left-color: #d97706; }
+.rec-card.type-config    { border-left-color: #059669; }
+.rec-card.type-landmark  { border-left-color: #7c3aed; }
+.rec-card.type-match     { border-left-color: #1d4ed8; }
 
 .rec-name {
-    font-weight: 700; font-size: 1.08rem; color: #ffffff; margin-bottom: 0.2rem;
+    font-weight: 700; font-size: 1.05rem; color: #0f172a; margin-bottom: 0.2rem;
 }
 .rec-locality {
-    font-size: 0.88rem; color: #94a3b8; font-weight: 500;
+    font-size: 0.86rem; color: #64748b; font-weight: 500;
 }
 .rec-price {
-    font-weight: 800; color: #38bdf8; font-size: 1.15rem;
+    font-weight: 800; color: #1d4ed8; font-size: 1.1rem;
 }
 .bhk-badge {
     display: inline-block;
-    background: rgba(37, 99, 235, 0.18); color: #93c5fd;
-    padding: 0.2rem 0.6rem; border-radius: 4px;
-    font-size: 0.78rem; font-weight: 700; margin-right: 0.3rem;
-    border: 1px solid rgba(37, 99, 235, 0.3);
+    background: #eff6ff; color: #1d4ed8;
+    padding: 0.2rem 0.55rem; border-radius: 4px;
+    font-size: 0.76rem; font-weight: 700; margin-right: 0.3rem;
+    border: 1px solid #bfdbfe;
 }
 .verified-tag {
     display: inline-block;
-    background: rgba(16, 185, 129, 0.15); color: #34d399;
+    background: #f0fdf4; color: #16a34a;
     padding: 0.15rem 0.5rem; border-radius: 4px;
-    font-size: 0.72rem; font-weight: 700; margin-left: 0.4rem;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    font-size: 0.7rem; font-weight: 700; margin-left: 0.4rem;
+    border: 1px solid #bbf7d0;
 }
 .featured-tag {
     display: inline-block;
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.08));
-    color: #fbbf24;
+    background: #fffbeb; color: #d97706;
     padding: 0.15rem 0.55rem; border-radius: 4px;
-    font-size: 0.72rem; font-weight: 700; margin-left: 0.4rem;
-    border: 1px solid rgba(245, 158, 11, 0.35);
+    font-size: 0.7rem; font-weight: 700; margin-left: 0.4rem;
+    border: 1px solid #fde68a;
 }
 .rec-link {
     display: inline-block;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    background: #1d4ed8;
     color: #ffffff !important;
     padding: 0.4rem 1rem; border-radius: 6px;
     text-decoration: none; font-size: 0.84rem; font-weight: 700;
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 2px 6px rgba(29, 78, 216, 0.2);
 }
 .rec-link:hover {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background: #1e40af;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 10px rgba(29, 78, 216, 0.3);
 }
 
-/* ─── PRIMARY BUTTONS ─── */
-.stButton > button[kind="primary"],
-div[data-testid="stFormSubmitButton"] > button {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
-    border: 1px solid rgba(56, 189, 248, 0.3) !important;
-    border-radius: 8px !important;
-    padding: 0.65rem 2rem !important;
-    font-weight: 700 !important;
-    font-size: 1.05rem !important;
-    letter-spacing: 0.01em !important;
-    color: #ffffff !important;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-.stButton > button[kind="primary"]:hover,
-div[data-testid="stFormSubmitButton"] > button:hover {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.5) !important;
-    transform: translateY(-2px) !important;
-}
-
-/* ─── METRICS & FORMS ─── */
-[data-testid="stMetric"] {
-    background: #131d31 !important;
-    border: 1px solid #1e293b !important;
-    border-radius: 8px !important; padding: 0.9rem !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
-}
-[data-testid="stForm"] {
-    border: 1px solid #1e293b !important;
-    border-radius: 10px !important; padding: 1.6rem !important;
-    background: #131d31 !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* ─── EXPANDERS ─── */
-[data-testid="stExpander"] {
-    background: #131d31 !important;
-    border: 1px solid #1e293b !important;
-    border-radius: 8px !important;
-}
-[data-testid="stExpander"] summary {
-    color: #f8fafc !important;
-}
-
-/* ─── DIVIDER & FOOTER ─── */
+/* ─── GRADIENT DIVIDER ─── */
 .gradient-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #334155 30%, #38bdf8 50%, #334155 70%, transparent);
-    margin: 1.8rem 0; border: none;
-    opacity: 0.6;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+    margin: 2rem 0;
+    border: none;
 }
+
+/* ─── FOOTER ─── */
 .site-footer {
-    text-align: center; padding: 2rem 0 1.5rem 0; margin-top: 3rem;
-    border-top: 1px solid #1e293b;
-    color: #64748b; font-size: 0.84rem;
+    margin-top: 3rem;
+    padding: 1.5rem 1.2rem;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #64748b;
+    border-top: 1px solid #cbd5e1;
+    background: #e2e8f0;
+    border-radius: 0 0 12px 12px;
 }
 .footer-brand {
-    color: #94a3b8; font-weight: 700; margin-bottom: 0.3rem; font-size: 0.95rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 0.3rem;
+    font-size: 0.88rem;
 }
 
-/* ─── TIMELINE ─── */
-.timeline { position: relative; padding-left: 2rem; margin: 1.5rem 0; }
-.timeline::before {
-    content: ''; position: absolute; left: 0.5rem; top: 0; bottom: 0;
-    width: 2px; background: #2563eb;
-}
-.timeline-item { position: relative; padding-bottom: 1.5rem; padding-left: 1rem; }
-.timeline-item::before {
-    content: ''; position: absolute; left: -1.55rem; top: 0.35rem;
-    width: 10px; height: 10px; border-radius: 50%;
-    background: #38bdf8; border: 2px solid #0b0f19;
-    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.4);
-}
-.timeline-title { font-weight: 700; color: #ffffff; margin-bottom: 0.25rem; }
-.timeline-desc { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; }
-.stat-badge {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(37, 99, 235, 0.3);
-    border-radius: 6px; padding: 0.4rem 0.8rem; margin: 0.2rem;
-    font-size: 0.88rem; color: #60a5fa; font-weight: 600;
-}
-
-/* ─── STREAMLIT TABS STYLING (DARK PORTAL) ─── */
+/* ─── STREAMLIT TABS ─── */
 @keyframes tabFadeIn {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(4px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 [data-testid="stTabs"] [data-baseweb="tab-list"] {
-    gap: 0.6rem;
-    border-bottom: 2px solid #1e293b;
-    padding-bottom: 0.4rem;
+    gap: 0.3rem;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 0;
     background: transparent;
 }
 [data-testid="stTabs"] [data-baseweb="tab"] {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-radius: 8px !important;
-    color: #94a3b8 !important;
-    font-weight: 700 !important;
-    font-size: 0.96rem !important;
-    padding: 0.6rem 1.3rem !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    color: #64748b !important;
+    font-weight: 600 !important;
+    font-size: 0.94rem !important;
+    padding: 0.6rem 1.2rem !important;
+    transition: all 0.2s ease !important;
+    margin-bottom: -2px !important;
 }
 [data-testid="stTabs"] [data-baseweb="tab"]:hover {
-    color: #f8fafc !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-color: rgba(56, 189, 248, 0.35) !important;
+    color: #1d4ed8 !important;
 }
 [data-testid="stTabs"] [aria-selected="true"] {
-    background: rgba(37, 99, 235, 0.2) !important;
-    color: #38bdf8 !important;
-    border-color: #38bdf8 !important;
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.2) !important;
+    color: #1d4ed8 !important;
+    border-bottom: 2px solid #1d4ed8 !important;
+    font-weight: 700 !important;
 }
 [data-testid="stTabs"] [data-baseweb="tab-highlight"] {
-    background-color: #38bdf8 !important;
+    background-color: #1d4ed8 !important;
 }
 [data-testid="stTabs"] [data-baseweb="tab-panel"] {
-    animation: tabFadeIn 0.35s ease-out;
+    animation: tabFadeIn 0.3s ease-out;
 }
 
-/* ─── GLOBAL SELECTBOX & INPUT CONTROLS ─── */
+/* ─── SECTION HEADERS ─── */
+.rec-section-header {
+    font-size: 1.12rem; font-weight: 700; color: #0f172a;
+    margin: 1rem 0 0.3rem 0;
+}
+.rec-section-note {
+    font-size: 0.86rem; color: #475569; margin-bottom: 0.8rem;
+    line-height: 1.4;
+}
+
+/* ─── GLOBAL SELECTBOX & DROPDOWNS ─── */
 div[data-baseweb="select"] > div {
-    background-color: #131f37 !important;
-    border: 1.5px solid #2563eb !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
     border-radius: 8px !important;
-    color: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
-    transition: all 0.2s ease-in-out !important;
-    min-height: 42px !important;
+    color: #0f172a !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.2s ease !important;
+    min-height: 40px !important;
 }
 div[data-baseweb="select"] > div:hover {
-    border-color: #38bdf8 !important;
-    background-color: #182848 !important;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.35) !important;
+    border-color: #1d4ed8 !important;
 }
-div[data-baseweb="select"] span, div[data-baseweb="select"] div {
-    color: #ffffff !important;
-    font-weight: 600 !important;
+div[data-baseweb="select"] span {
+    color: #0f172a !important;
+    font-weight: 500 !important;
 }
 div[data-baseweb="select"] svg {
-    fill: #38bdf8 !important;
-    width: 20px !important;
-    height: 20px !important;
+    fill: #64748b !important;
 }
 div[data-baseweb="popover"], ul[data-baseweb="menu"] {
-    background-color: #0f172a !important;
-    border: 1.5px solid #38bdf8 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
     border-radius: 8px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1) !important;
 }
 ul[data-baseweb="menu"] li {
-    color: #f1f5f9 !important;
+    color: #0f172a !important;
     font-weight: 500 !important;
-    padding: 0.6rem 1rem !important;
+    padding: 0.55rem 1rem !important;
 }
 ul[data-baseweb="menu"] li:hover,
 ul[data-baseweb="menu"] li[aria-selected="true"] {
-    background-color: #1d4ed8 !important;
+    background-color: #eff6ff !important;
+    color: #1d4ed8 !important;
+}
+
+/* ─── EXPANDER STYLING ─── */
+[data-testid="stExpander"] {
+    border: 1px solid #d8dde6 !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03) !important;
+}
+[data-testid="stExpander"] summary {
+    font-weight: 600 !important;
+    color: #0f172a !important;
+}
+
+/* ─── STREAMLIT INPUTS ─── */
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input,
+[data-testid="stTextArea"] textarea {
+    background-color: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    color: #0f172a !important;
+}
+[data-testid="stTextInput"] input:focus,
+[data-testid="stNumberInput"] input:focus {
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.15) !important;
+}
+
+/* ─── STREAMLIT BUTTONS ─── */
+button[kind="primary"], .stButton > button {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
     color: #ffffff !important;
+    border: 1px solid #1d4ed8 !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1.5rem !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 8px rgba(29, 78, 216, 0.2) !important;
+}
+button[kind="primary"]:hover, .stButton > button:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(29, 78, 216, 0.3) !important;
+}
+
+/* ─── METRICS ─── */
+[data-testid="stMetric"] {
+    background: #ffffff;
+    border: 1px solid #d8dde6;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+}
+[data-testid="stMetric"] label {
+    color: #64748b !important;
+}
+[data-testid="stMetric"] [data-testid="stMetricValue"] {
+    color: #0f172a !important;
 }
 """
-
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -734,7 +729,7 @@ ul[data-baseweb="menu"] li[aria-selected="true"] {
 # ══════════════════════════════════════════════════════════════════════════
 
 def apply_theme():
-    """Inject the portal dark design system CSS + Google Fonts + sidebar branding."""
+    """Inject the portal light design system CSS + Google Fonts + sidebar branding."""
     st.markdown(
         '<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800'
         '&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">',
@@ -760,8 +755,8 @@ def render_hero(title, tagline, show_logo=False, image_path=None,
     """Render a portal header banner.
 
     If *image_path* points to a valid image, the hero uses a full-bleed
-    background image with a dark gradient overlay (99acres-style).
-    Otherwise falls back to a gradient-only banner.
+    background image with a dark gradient overlay.
+    Otherwise falls back to a red gradient banner.
 
     *hero_stats* is an optional list of (value, label) tuples shown as
     frosted-glass stat pills at the bottom of the hero.
@@ -797,7 +792,7 @@ def render_hero(title, tagline, show_logo=False, image_path=None,
             unsafe_allow_html=True,
         )
     else:
-        # Fallback gradient hero
+        # Fallback red gradient hero
         st.markdown(
             f'<div class="hero-portal-wrap">'
             f'{badge_html}'
@@ -828,7 +823,7 @@ def render_feature_cards(cards):
                 # Gradient placeholder
                 img_html = (
                     '<div class="feature-card-image" style="'
-                    'background: linear-gradient(135deg, #0f2756 0%, #1a4494 100%);'
+                    'background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);'
                     'height:160px;"></div>'
                 )
         tag_html = f'<div class="feature-card-tag">{c.get("tag", "EXPLORE →")}</div>' if c.get("tag") else ""
@@ -884,7 +879,7 @@ def render_kpi_cards(kpis):
 
 
 def render_prediction_result(low, point, high, r2=None, mae=None, built_up_area=None):
-    """Render the valuation panel without R2/MAE validation box."""
+    """Render the valuation panel."""
     pps_html = ""
     if built_up_area and float(built_up_area) > 0:
         pps = (point * 1e7) / float(built_up_area)
@@ -940,9 +935,9 @@ def render_rec_card(name, locality, bhk_configs, min_price, max_price, link,
         if not (math.isnan(min_price) or math.isnan(max_price)):
             price_html = f'<span class="rec-price">₹ {min_price:.2f} – {max_price:.2f} Cr</span>'
         else:
-            price_html = '<span class="rec-price" style="color:#64748b;">Price on request</span>'
+            price_html = '<span class="rec-price" style="color:#999;">Price on request</span>'
     else:
-        price_html = '<span class="rec-price" style="color:#64748b;">Price on request</span>'
+        price_html = '<span class="rec-price" style="color:#999;">Price on request</span>'
 
     import urllib.parse
     clean_locality = str(locality or 'Gurugram').replace('Sector ', 'Sector-')

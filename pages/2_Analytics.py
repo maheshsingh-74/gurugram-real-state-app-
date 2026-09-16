@@ -74,7 +74,7 @@ def load_facilities_text():
 
 
 def styled_plotly(fig, **extra_layout):
-    """Apply the shared dark Plotly layout to any figure."""
+    """Apply the shared professional light Plotly layout to any figure."""
     layout = {**PLOTLY_LAYOUT, **extra_layout}
     fig.update_layout(**layout)
     return fig
@@ -86,7 +86,7 @@ def _show_sector_bar(df):
     fig = px.bar(
         sector_avg, x="price", y="sector", orientation="h",
         labels={"price": "Avg Price (Cr)", "sector": ""},
-        color="price", color_continuous_scale=["#93c5fd", "#2563eb", "#1e40af"],
+        color="price", color_continuous_scale=["#bfdbfe", "#1d4ed8"],
     )
     fig.update_layout(yaxis={"categoryorder": "total ascending"}, height=600,
                       coloraxis_showscale=False)
@@ -172,8 +172,8 @@ else:
                         tooltip={
                             "html": "<div style='font-family:sans-serif; padding:6px; font-size:13px;'>"
                                     "<b>Sector:</b> {sector}<br/>"
-                                    "<b>Avg Price:</b> <span style='color:#38bdf8;'>{price_str}</span></div>",
-                            "style": {"backgroundColor": "#041533", "color": "#ffffff", "borderRadius": "6px"}
+                                    "<b>Avg Price:</b> <span style='color:#1d4ed8;'>{price_str}</span></div>",
+                            "style": {"backgroundColor": "#ffffff", "color": "#0f172a", "borderRadius": "6px", "boxShadow": "0 2px 8px rgba(15,23,42,0.12)", "border": "1px solid #cbd5e1"}
                         },
                         map_style=None,
                     )
@@ -181,10 +181,10 @@ else:
                     st.caption("🔵 Circle size and color intensity reflect average property price. Hover over any sector circle for pricing details.")
                 except Exception as map_err:
                     st.warning(f"Interactive PyDeck map couldn't load ({map_err}). Showing standard map below.")
-                    st.map(merged, latitude="latitude", longitude="longitude", size="price", color="#0078db")
+                    st.map(merged, latitude="latitude", longitude="longitude", size="price", color="#1d4ed8")
 
             with map_tab2:
-                st.map(merged, latitude="latitude", longitude="longitude", size="price", color="#0078db")
+                st.map(merged, latitude="latitude", longitude="longitude", size="price", color="#1d4ed8")
                 st.caption("Standard geospatial plot with dot size scaled by sector price.")
 
             with map_tab3:
@@ -204,7 +204,7 @@ else:
     fig = px.scatter(
         price_df, x="built_up_area", y="price", color=color_col, opacity=0.55,
         labels={"built_up_area": "Built-up Area (sq ft)", "price": "Price (Cr)"},
-        color_discrete_sequence=["#2563eb", "#f59e0b"],
+        color_discrete_sequence=["#1d4ed8", "#d97706"],
     )
     styled_plotly(fig, height=480)
     fig.update_traces(marker=dict(size=6, line=dict(width=0)))
@@ -226,14 +226,14 @@ else:
         fig = px.pie(
             values=bhk_counts.values,
             names=[f"{int(b)} BHK" for b in bhk_counts.index],
-            color_discrete_sequence=["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd",
-                                     "#f59e0b", "#8b5cf6", "#06b6d4"],
+            color_discrete_sequence=["#1d4ed8", "#0d9488", "#d97706", "#7c3aed",
+                                     "#2563eb", "#059669", "#0284c7"],
             hole=0.4,
         )
         fig.update_traces(textinfo="percent+label", textfont_size=12)
         styled_plotly(fig, height=420, showlegend=False,
                       title=dict(text=f"BHK Distribution — {sector_choice}",
-                                 font=dict(size=15, color="#64748b")))
+                                 font=dict(size=15, color="#0f172a")))
         st.plotly_chart(fig, use_container_width=True)
 
     render_gradient_divider()
@@ -246,8 +246,8 @@ else:
         box_df, x="bedRoom", y="price",
         labels={"bedRoom": "Bedrooms", "price": "Price (Cr)"},
         color="bedRoom",
-        color_discrete_sequence=["#2563eb", "#f59e0b", "#ef4444", "#8b5cf6",
-                                 "#06b6d4", "#3b82f6", "#f97316", "#ec4899"],
+        color_discrete_sequence=["#1d4ed8", "#0d9488", "#d97706", "#7c3aed",
+                                 "#2563eb", "#059669", "#dc2626", "#475569"],
     )
     styled_plotly(fig, height=450, showlegend=False)
     st.plotly_chart(fig, use_container_width=True)
@@ -261,7 +261,7 @@ else:
             price_df, x="property_type", y="price", color="property_type",
             box=True, points="outliers",
             labels={"property_type": "Property Type", "price": "Price (Cr)"},
-            color_discrete_sequence=["#2563eb", "#f59e0b"],
+            color_discrete_sequence=["#1d4ed8", "#0d9488"],
         )
         styled_plotly(fig, height=440, showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
@@ -283,7 +283,7 @@ else:
         wc = WordCloud(
             width=1200, height=400, background_color=None, mode="RGBA",
             colormap="Blues", max_words=80, prefer_horizontal=0.85,
-            contour_width=0, contour_color="#2563eb",
+            contour_width=0, contour_color="#1d4ed8",
         ).generate(text)
         fig, ax = plt.subplots(figsize=(14, 5))
         fig.patch.set_alpha(0.0)
@@ -301,7 +301,7 @@ else:
         freq_df = pd.DataFrame(top, columns=["Amenity", "Count"])
         fig = px.bar(
             freq_df, x="Count", y="Amenity", orientation="h",
-            color="Count", color_continuous_scale=["#93c5fd", "#2563eb", "#1e40af"],
+            color="Count", color_continuous_scale=["#bfdbfe", "#1d4ed8"],
         )
         fig.update_layout(yaxis={"categoryorder": "total ascending"}, coloraxis_showscale=False)
         styled_plotly(fig, height=500)
@@ -336,19 +336,19 @@ else:
         st.markdown(f"""
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin:1rem 0;">
             <div class="portal-card" style="padding:1.2rem; text-align:center;">
-                <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase;">Average Property Price</div>
-                <div style="margin-top:0.4rem; font-size:1.1rem; font-weight:700; color:#38bdf8;">{sec_a.title()}: ₹ {avg_a:.2f} Cr</div>
-                <div style="font-size:1.1rem; font-weight:700; color:#f59e0b;">{sec_b.title()}: ₹ {avg_b:.2f} Cr</div>
+                <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase;">Average Property Price</div>
+                <div style="margin-top:0.4rem; font-size:1.1rem; font-weight:700; color:#1d4ed8;">{sec_a.title()}: ₹ {avg_a:.2f} Cr</div>
+                <div style="font-size:1.1rem; font-weight:700; color:#0d9488;">{sec_b.title()}: ₹ {avg_b:.2f} Cr</div>
             </div>
             <div class="portal-card" style="padding:1.2rem; text-align:center;">
-                <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase;">Median Rate / Sq Ft</div>
-                <div style="margin-top:0.4rem; font-size:1.1rem; font-weight:700; color:#38bdf8;">{sec_a.title()}: ₹ {pps_a:,.0f}</div>
-                <div style="font-size:1.1rem; font-weight:700; color:#f59e0b;">{sec_b.title()}: ₹ {pps_b:,.0f}</div>
+                <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase;">Median Rate / Sq Ft</div>
+                <div style="margin-top:0.4rem; font-size:1.1rem; font-weight:700; color:#1d4ed8;">{sec_a.title()}: ₹ {pps_a:,.0f}</div>
+                <div style="font-size:1.1rem; font-weight:700; color:#0d9488;">{sec_b.title()}: ₹ {pps_b:,.0f}</div>
             </div>
             <div class="portal-card" style="padding:1.2rem; text-align:center;">
-                <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase;">Verified Inventory</div>
-                <div style="margin-top:0.4rem; font-size:1.1rem; font-weight:700; color:#38bdf8;">{sec_a.title()}: {len(df_a)} listings</div>
-                <div style="font-size:1.1rem; font-weight:700; color:#f59e0b;">{sec_b.title()}: {len(df_b)} listings</div>
+                <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase;">Verified Inventory</div>
+                <div style="margin-top:0.4rem; font-size:1.1rem; font-weight:700; color:#1d4ed8;">{sec_a.title()}: {len(df_a)} listings</div>
+                <div style="font-size:1.1rem; font-weight:700; color:#0d9488;">{sec_b.title()}: {len(df_b)} listings</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -366,7 +366,7 @@ else:
         fig_bhk = px.bar(
             bhk_comp, x="BHK", y="price", color="Sector", barmode="group",
             labels={"price": "Avg Price (₹ Cr)", "BHK": "Configuration"},
-            color_discrete_map={sec_a.title(): "#38bdf8", sec_b.title(): "#f59e0b"},
+            color_discrete_map={sec_a.title(): "#1d4ed8", sec_b.title(): "#0d9488"},
             title=f"<b>BHK Price Comparison</b> — {sec_a.title()} vs {sec_b.title()}"
         )
         styled_plotly(fig_bhk, height=380)

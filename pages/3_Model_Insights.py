@@ -124,20 +124,20 @@ with comp_col2:
         x=["R² Score", "Accuracy (1 - MAPE)"],
         y=[r2_val, max(0, 1 - (mape_val / 100))],
         marker=dict(
-            color=["#38bdf8", "#10b981"],
-            line=dict(color="rgba(255,255,255,0.2)", width=1),
+            color=["#1d4ed8", "#0d9488"],
+            line=dict(color="rgba(0,0,0,0.08)", width=1),
         ),
         text=[f"{r2_val:.3f}", f"{max(0, 1 - (mape_val/100)):.3f}"],
         textposition="outside",
-        textfont=dict(size=14, color="#ffffff"),
+        textfont=dict(size=14, color="#0f172a"),
     ))
     fig_acc.update_layout(
-        title=dict(text="<b>Overall Accuracy Ratios</b>", font=dict(size=14, color="#ffffff")),
+        title=dict(text="<b>Overall Accuracy Ratios</b>", font=dict(size=14, color="#0f172a")),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#94a3b8", family="Inter, sans-serif"),
-        yaxis=dict(range=[0, 1.2], gridcolor="#1e293b", tickfont=dict(color="#94a3b8")),
-        xaxis=dict(tickfont=dict(color="#e2e8f0", size=13)),
+        font=dict(color="#334155", family="'Inter', sans-serif"),
+        yaxis=dict(range=[0, 1.2], gridcolor="#e2e8f0", tickfont=dict(color="#64748b")),
+        xaxis=dict(tickfont=dict(color="#0f172a", size=13)),
         height=300,
         margin=dict(l=10, r=10, t=40, b=30),
         showlegend=False,
@@ -204,19 +204,19 @@ if feats and imps:
         y=feats,
         orientation="h",
         marker=dict(
-            color="#38bdf8",
-            line=dict(color="rgba(56, 189, 248, 0.4)", width=1),
+            color="#1d4ed8",
+            line=dict(color="rgba(29, 78, 216, 0.2)", width=1),
         ),
         text=[f"{v:.3f}" for v in imps],
         textposition="outside",
-        textfont=dict(size=11, color="#e2e8f0"),
+        textfont=dict(size=11, color="#334155"),
     ))
     fig_imp.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#94a3b8", family="Inter, sans-serif"),
-        yaxis=dict(categoryorder="total ascending", tickfont=dict(color="#f1f5f9", size=12)),
-        xaxis=dict(title="Mean |SHAP Value| (Impact on log price)", gridcolor="#1e293b", tickfont=dict(color="#94a3b8")),
+        font=dict(color="#334155", family="'Inter', sans-serif"),
+        yaxis=dict(categoryorder="total ascending", tickfont=dict(color="#0f172a", size=12)),
+        xaxis=dict(title="Mean |SHAP Value| (Impact on log price)", gridcolor="#e2e8f0", tickfont=dict(color="#64748b")),
         height=500,
         margin=dict(l=10, r=40, t=20, b=40),
     )
@@ -242,17 +242,17 @@ else:
         x=fallback_imps,
         y=fallback_feats,
         orientation="h",
-        marker=dict(color="#38bdf8"),
+        marker=dict(color="#1d4ed8"),
         text=[f"{v:.3f}" for v in fallback_imps],
         textposition="outside",
-        textfont=dict(size=11, color="#e2e8f0"),
+        textfont=dict(size=11, color="#334155"),
     ))
     fig_imp.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#94a3b8", family="Inter, sans-serif"),
-        yaxis=dict(categoryorder="total ascending", tickfont=dict(color="#f1f5f9", size=12)),
-        xaxis=dict(title="Mean |SHAP Value| (Impact on log price)", gridcolor="#1e293b", tickfont=dict(color="#94a3b8")),
+        font=dict(color="#334155", family="'Inter', sans-serif"),
+        yaxis=dict(categoryorder="total ascending", tickfont=dict(color="#0f172a", size=12)),
+        xaxis=dict(title="Mean |SHAP Value| (Impact on log price)", gridcolor="#e2e8f0", tickfont=dict(color="#64748b")),
         height=480,
         margin=dict(l=10, r=40, t=20, b=40),
     )
@@ -266,23 +266,23 @@ st.caption("How raw Gurugram real estate data flows from preprocessing to gradie
 
 st.markdown("""
 <div class="portal-card" style="padding:1.6rem 1.8rem; margin-bottom:1.5rem;">
-    <div style="font-size:0.95rem; color:#e2e8f0; line-height:1.9; font-family:monospace;">
-        <div style="margin-bottom:0.8rem; font-weight:800; color:#38bdf8; font-size:1.1rem;">
+    <div style="font-size:0.95rem; color:#0f172a; line-height:1.9; font-family:monospace;">
+        <div style="margin-bottom:0.8rem; font-weight:800; color:#1d4ed8; font-size:1.1rem;">
             TransformedTargetRegressor (Target = log1p(Price), Inverse = expm1)
         </div>
-        <div style="padding-left:1.5rem; border-left:3px solid #2563eb;">
-            <div style="margin-bottom:0.6rem; color:#ffffff; font-weight:700;">
+        <div style="padding-left:1.5rem; border-left:3px solid #1d4ed8;">
+            <div style="margin-bottom:0.6rem; color:#0f172a; font-weight:700;">
                 📦 ColumnTransformer (Leak-Free Preprocessing Pipeline)
             </div>
-            <div style="padding-left:1.5rem; color:#94a3b8; font-size:0.88rem;">
+            <div style="padding-left:1.5rem; color:#64748b; font-size:0.88rem;">
                 ├─ <strong>StandardScaler</strong> → bedRoom, bathroom, built_up_area, servant room, store room<br/>
                 ├─ <strong>OrdinalEncoder</strong> → property_type, balcony, furnishing_type, luxury_category, floor_category<br/>
                 └─ <strong>OneHotEncoder</strong> (drop="first") → sector (104 sectors), agePossession
             </div>
-            <div style="margin-top:1rem; color:#ffffff; font-weight:700;">
+            <div style="margin-top:1rem; color:#0f172a; font-weight:700;">
                 🌲 XGBRegressor (Gradient Boosting Regressor)
             </div>
-            <div style="padding-left:1.5rem; color:#94a3b8; font-size:0.88rem;">
+            <div style="padding-left:1.5rem; color:#64748b; font-size:0.88rem;">
                 ├─ Hyperparameters: n_estimators=300, max_depth=6, learning_rate=0.05, subsample=0.8<br/>
                 └─ Search Strategy: RandomizedSearchCV (80 parameter iterations, 5-fold CV)
             </div>
@@ -297,9 +297,9 @@ st.markdown("### 💡 Core Architectural Decisions")
 d1, d2 = st.columns(2)
 with d1:
     st.markdown("""
-    <div class="portal-card" style="padding:1.2rem 1.4rem; height:100%;">
-        <div style="font-weight:700; color:#38bdf8; margin-bottom:0.4rem;">1. Log Target Transformation (log1p)</div>
-        <div style="font-size:0.88rem; color:#94a3b8; line-height:1.6;">
+    <div class="portal-card" style="padding:1.2rem 1.4rem; height:100%; border-top: 3px solid #1d4ed8;">
+        <div style="font-weight:700; color:#1d4ed8; margin-bottom:0.4rem;">1. Log Target Transformation (log1p)</div>
+        <div style="font-size:0.88rem; color:#64748b; line-height:1.6;">
             Real estate prices in Gurugram are severely right-skewed (spanning from ₹ 20 Lakhs to ₹ 40+ Crores). 
             Applying <code>log1p(price)</code> linearizes multiplicative market relationships and stabilizes residuals across all tiers.
         </div>
@@ -308,9 +308,9 @@ with d1:
 
 with d2:
     st.markdown("""
-    <div class="portal-card" style="padding:1.2rem 1.4rem; height:100%;">
-        <div style="font-weight:700; color:#10b981; margin-bottom:0.4rem;">2. Pure Holdout Set (Zero Data Leakage)</div>
-        <div style="font-size:0.88rem; color:#94a3b8; line-height:1.6;">
+    <div class="portal-card" style="padding:1.2rem 1.4rem; height:100%; border-top: 3px solid #52c41a;">
+        <div style="font-weight:700; color:#52c41a; margin-bottom:0.4rem;">2. Pure Holdout Set (Zero Data Leakage)</div>
+        <div style="font-size:0.88rem; color:#6b7280; line-height:1.6;">
             A 15% test split was partitioned away prior to any feature engineering or parameter search. 
             All encoders and scalers are fitted exclusively on the 85% train split, guaranteeing reported metrics reflect pure generalization.
         </div>
@@ -320,9 +320,9 @@ with d2:
 d3, d4 = st.columns(2)
 with d3:
     st.markdown("""
-    <div class="portal-card" style="padding:1.2rem 1.4rem; height:100%; margin-top:0.8rem;">
-        <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">3. Encoding Separation Fix</div>
-        <div style="font-size:0.88rem; color:#94a3b8; line-height:1.6;">
+    <div class="portal-card" style="padding:1.2rem 1.4rem; height:100%; margin-top:0.8rem; border-top: 3px solid #1890ff;">
+        <div style="font-weight:700; color:#1890ff; margin-bottom:0.4rem;">3. Encoding Separation Fix</div>
+        <div style="font-size:0.88rem; color:#6b7280; line-height:1.6;">
             High-cardinality nominal features like <code>sector</code> and <code>agePossession</code> are strictly one-hot encoded. 
             They are never duplicated into ordinal pipelines, avoiding artificial linear relationships between arbitrary sector IDs.
         </div>
@@ -331,9 +331,9 @@ with d3:
 
 with d4:
     st.markdown("""
-    <div class="portal-card" style="padding:1.2rem 1.4rem; height:100%; margin-top:0.8rem;">
-        <div style="font-weight:700; color:#ec4899; margin-bottom:0.4rem;">4. Confidence Valuation Intervals</div>
-        <div style="font-size:0.88rem; color:#94a3b8; line-height:1.6;">
+    <div class="portal-card" style="padding:1.2rem 1.4rem; height:100%; margin-top:0.8rem; border-top: 3px solid #722ed1;">
+        <div style="font-weight:700; color:#722ed1; margin-bottom:0.4rem;">4. Confidence Valuation Intervals</div>
+        <div style="font-size:0.88rem; color:#6b7280; line-height:1.6;">
             No model is 100% exact. The portal reports Fair Low, Expected Fair Value, and Fair High based on the model's holdout MAE (±0.21 Cr). 
             This reflects genuine real-world appraisal methodology.
         </div>
