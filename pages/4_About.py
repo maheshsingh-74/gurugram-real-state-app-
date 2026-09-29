@@ -4,18 +4,25 @@ About page - the story behind this project, the data, and me.
 
 import streamlit as st
 
-from branding import apply_theme, render_hero, render_gradient_divider, render_footer
+from branding import apply_theme, render_plush_topbar, render_hero, render_gradient_divider, render_footer
 
 YOUR_NAME = "Mahesh Singh Beniwal"
 YOUR_EMAIL = "maheshbeniwal74@gmail.com"
 GITHUB_URL = "https://github.com/maheshsingh-74/gurugram-real-state-app-"
 
-st.set_page_config(page_title="EstateIQ Gurugram | About", page_icon="👋", layout="wide")
+st.set_page_config(page_title="EstateIQ Gurugram | About This Platform", page_icon="👋", layout="wide")
 apply_theme()
+render_plush_topbar()
 
 render_hero(
-    "👋 About This Project",
-    "Why I built EstateIQ Gurugram, where the data came from, and how it all fits together",
+    "About EstateIQ Gurugram",
+    "Machine Learning Powered Property Valuation & Real Estate Intelligence across Gurugram & Delhi-NCR",
+    image_path="static/plush_city_banner.jpg",
+    hero_stats=[
+        ("Delhi-NCR", "Consulting Presence"),
+        ("4,500+", "Properties Analyzed"),
+        ("RERA", "Standard Advisory"),
+    ]
 )
 
 # ── Intro ─────────────────────────────────────────────────────────────

@@ -12,19 +12,25 @@ import pandas as pd
 import streamlit as st
 
 from branding import (
-    apply_theme, render_hero, render_gradient_divider, render_footer,
+    apply_theme, render_plush_topbar, render_hero, render_gradient_divider, render_footer,
     render_rec_card, get_card_type, render_kpi_cards,
 )
 
 ARTIFACT_PATH = os.path.join("recommender_artifacts", "recommender_artifacts.pkl")
 
-st.set_page_config(page_title="EstateIQ Gurugram | Recommendations", page_icon="🏘️", layout="wide")
+st.set_page_config(page_title="Plush Homes LLP | Property Recommendations", page_icon="🏘️", layout="wide")
 apply_theme()
+render_plush_topbar()
 
 render_hero(
-    "🏘️ Property Recommendations",
-    "Five different angles on what might suit you — not just one ranked list",
-    image_path="static/property_card_bg.jpg",
+    "Curated Property Recommendations",
+    "Tailored Luxury Portfolio & 5-Angle Intelligent Matching across Gurugram",
+    image_path="static/tulip_melrose.jpg",
+    hero_stats=[
+        ("5 Angles", "Matching Criteria"),
+        ("250+", "Luxury Complexes"),
+        ("100% RERA", "Verified"),
+    ]
 )
 
 

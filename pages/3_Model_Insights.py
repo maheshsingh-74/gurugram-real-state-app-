@@ -14,7 +14,7 @@ import streamlit as st
 import joblib
 
 from branding import (
-    apply_theme, render_hero, render_gradient_divider, render_footer,
+    apply_theme, render_plush_topbar, render_hero, render_gradient_divider, render_footer,
     render_kpi_cards, PLOTLY_LAYOUT,
 )
 
@@ -23,11 +23,12 @@ MODEL_PATH = os.path.join("models", "best_pipeline.joblib")
 TRENDS_CSV = "gurgaon_properties_post_feature_selection_v2.csv"
 
 st.set_page_config(
-    page_title="EstateIQ Gurugram | Model Insights",
+    page_title="Plush Homes LLP | Model Insights & AI Transparency",
     page_icon="🔬",
     layout="wide",
 )
 apply_theme()
+render_plush_topbar()
 
 
 @st.cache_resource(show_spinner=False)

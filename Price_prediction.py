@@ -16,7 +16,8 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from branding import (
-    apply_theme, render_hero, render_gradient_divider, render_footer,
+    apply_theme, render_top_ribbon, render_hero, render_portal_spotlight,
+    render_featured_projects, render_gradient_divider, render_footer,
     render_prediction_result, render_rec_card, render_kpi_cards,
     render_feature_cards, col_label, COLUMN_LABELS, PLOTLY_LAYOUT
 )
@@ -24,12 +25,13 @@ from branding import (
 MODEL_DIR = "models"
 
 st.set_page_config(
-    page_title="EstateIQ Gurugram | Price Predictor",
+    page_title="EstateIQ Gurugram | Property Valuation & Intelligence",
     page_icon="🏙️",
     layout="wide",
 )
 
 apply_theme()
+render_top_ribbon()
 
 
 @st.cache_resource(show_spinner=False)
@@ -373,30 +375,39 @@ ADVANCED_CATEGORICAL = [c for c in categorical_cols if c not in ESSENTIAL_CATEGO
 best_model_name = metadata["best_model"]
 metrics = metadata["metrics"][best_model_name]
 
-# ── Hero ──────────────────────────────────────────────────────────────────
+# ── Hero Section (with User Photo) ────────────────────────────────────────
+hero_options = {
+    "📷 User Residence Courtyard (Provided)": "static/user_front_image.png",
+    "✨ 4K Ultra-Luxury Masterpiece": "static/plush_luxury_hero.jpg",
+    "🏙️ Gurugram Horizon Skyline": "static/plush_city_banner.jpg",
+}
+
+col_hero_sel1, col_hero_sel2 = st.columns([3, 1.2])
+with col_hero_sel2:
+    selected_hero_label = st.selectbox(
+        "Hero Image Style:",
+        list(hero_options.keys()),
+        index=0,
+        help="Switch between your provided photo and high-resolution luxury views."
+    )
+active_hero_image = hero_options[selected_hero_label]
+
 render_hero(
-    "EstateIQ Gurugram",
-    "Smart algorithmic price estimates for the Gurugram residential market",
+    "Turning Vision Into Reality",
+    "Residential Floors | Luxury Apartments | Commercial SCO | Plots across Gurugram",
     show_logo=True,
-    image_path="static/hero_banner.jpg",
+    image_path=active_hero_image,
     hero_stats=[
-        (f"{len(categorical_options.get('sector', []))}", "Sectors"),
-        (best_model_name.split('(')[0].strip(), "Model"),
         ("4,500+", "Listings"),
+        (f"{len(categorical_options.get('sector', []))}", "Sectors"),
+        ("₹5.75 Cr+", "Luxury Portfolios"),
+        ("92.7%", "Accuracy R²"),
     ],
 )
 
-
-with st.expander("ℹ️ About this data & model", expanded=False):
-    dataset_line = (f"- Trained on **4,500+ property listings** across "
-                    f"**{len(categorical_options.get('sector', []))} sectors** in Gurugram.")
-    st.markdown(f"""
-{dataset_line}
-- Model: **{best_model_name}**, tuned via randomized search with 5-fold cross-validation.
-- Accuracy is reported on a **held-out test set the model never saw during tuning**: R² **{metrics['holdout_r2']:.3f}**,
-  typical error ₹{metrics['holdout_mae']:.2f} Cr (MAPE {metrics['holdout_mape']:.1f}%).
-- Every prediction below is shown as a **range**, not a single number — no model is perfectly precise.
-""")
+# ── Spotlight & Featured Developments ─────────────────────────────────────
+render_portal_spotlight()
+render_featured_projects()
 
 render_gradient_divider()
 
@@ -407,7 +418,7 @@ render_feature_cards([
         "title": "Buy & Valuation Check",
         "desc": "Get instant ML-powered price estimates for any property configuration across Gurugram sectors.",
         "tag": "CALCULATE PRICE →",
-        "image": "static/hero_banner.jpg",
+        "image": "static/sobha_crescent.webp",
         "link": "#valuation-calculator",
     },
     {
@@ -415,7 +426,7 @@ render_feature_cards([
         "title": "Smart Recommendations",
         "desc": "Five-angle property matching — by location, budget, configuration, landmarks, and amenities.",
         "tag": "FIND PROPERTIES →",
-        "image": "static/property_card_bg.jpg",
+        "image": "static/tulip_melrose.jpg",
         "link": "Recommendations",
     },
     {
@@ -423,7 +434,7 @@ render_feature_cards([
         "title": "Market Analytics",
         "desc": "Interactive geospatial maps, sector trends, BHK distributions, and price correlations.",
         "tag": "VIEW ANALYTICS →",
-        "image": "static/analytics_banner.jpg",
+        "image": "static/plush_luxury_hero.jpg",
         "link": "Analytics",
     },
 ])

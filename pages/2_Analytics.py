@@ -19,7 +19,7 @@ import plotly.graph_objects as go
 import streamlit as st
 import pydeck as pdk
 
-from branding import apply_theme, render_hero, render_gradient_divider, render_footer, render_kpi_cards, PLOTLY_LAYOUT
+from branding import apply_theme, render_plush_topbar, render_hero, render_gradient_divider, render_footer, render_kpi_cards, PLOTLY_LAYOUT
 
 PRICE_CSV = "gurgaon_properties_post_feature_selection_v2.csv"
 APPARTMENTS_CSV = "appartments.csv"
@@ -32,13 +32,19 @@ OUTLIER_INDICES = [44, 333, 501, 589, 641, 673, 845, 854, 949, 1018, 1104, 1165,
                    2496, 2579, 2670, 2672, 2673, 2676, 2710, 2743, 2775, 2869, 2948,
                    2952, 2969, 3167, 3249, 3275, 3388]
 
-st.set_page_config(page_title="EstateIQ Gurugram | Analytics", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Plush Homes LLP | Market Analytics", page_icon="📊", layout="wide")
 apply_theme()
+render_plush_topbar()
 
 render_hero(
-    "📊 Market Analytics",
-    "Explore the data behind the price model and recommendations",
-    image_path="static/analytics_banner.jpg",
+    "Gurugram Real Estate Market Analytics",
+    "Geospatial price maps, sector valuation trends, and micro-market intelligence",
+    image_path="static/plush_luxury_hero.jpg",
+    hero_stats=[
+        ("100+ Sectors", "Mapped"),
+        ("₹/sq ft Trends", "Historical"),
+        ("Geospatial 3D", "Interactive"),
+    ]
 )
 
 

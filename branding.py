@@ -1,31 +1,31 @@
 """
 Design system and shared branding for EstateIQ Gurugram — Real Estate Intelligence Portal.
+Modeled on the premium proptech visual design of Plush Homes:
+- Palette: Warm Gold (#968340 / #b7a775), Deep Navy (#004274), Light Studio (#f8f8f8), Pure White (#ffffff), Deep Charcoal (#111827 / #222222)
+- Typography: Playfair Display, Roboto, Outfit
+- Clean cards, real property photography, and user's front image
+- No third-party phone numbers, emails, or company identities
 
-Professional proptech aesthetics with soothing soft-slate canvas and authoritative sapphire navy:
-- Canvas: Soft Warm Slate (#edf0f5) — eye-friendly, comfortable contrast, not blinding white
-- Cards & Surfaces: Clean white (#ffffff) with refined slate borders (#d8dde6)
-- Brand Primary: Deep Sapphire Blue (#1d4ed8 / #1e3a8a)
-- Secondary Accent: Forest Teal (#0d9488) & Warm Amber (#d97706)
-- Headings & Text: Deep Slate (#0f172a) and soft slate gray (#334155 / #64748b)
-- Badges: Soft pastel backgrounds with gentle borders
-
-Exported helpers
-────────────────
-  apply_theme()               → CSS + sidebar (call once per page)
-  render_hero(title, tagline)  → Portal hero section with background image
-  render_gradient_divider()    → Styled separator
-  render_footer()              → Portal footer
-  render_kpi_cards(kpis)       → Row of metric stat cards
-  render_prediction_result()   → Valuation panel
-  render_rec_card()            → Property listing card
-  render_feature_cards()       → Feature showcase grid
-  col_label(name)              → Human-readable column label
-  PLOTLY_LAYOUT                → Dict to spread into fig.update_layout()
+Exported helpers:
+  apply_theme()                 -> Injects CSS + Google Fonts + top ribbon + sidebar branding
+  render_top_ribbon()           -> Luxury portal status ribbon (no phone/mail)
+  render_hero()                 -> Hero section with user's front photo & gold badges
+  render_portal_spotlight()     -> Intelligence platform spotlight banner
+  render_featured_projects()    -> Visual showcase of Gurugram projects with real photos
+  render_feature_cards()        -> Portal feature navigation cards with real photos
+  render_rec_card()             -> Recommendation card with real project thumbnail & gold details CTA
+  render_prediction_result()    -> Luxury valuation card with gold badges & market metrics
+  render_kpi_cards()            -> Metric stat cards with gold accents
+  render_gradient_divider()     -> Gold-tinted gradient divider
+  render_footer()               -> Luxury dark footer with platform disclosures
+  col_label()                   -> Human-readable column label
+  COLUMN_LABELS                 -> Column label mapping
+  PLOTLY_LAYOUT                 -> Harmonized chart theme with gold accents
 """
 
 import base64
 import os
-
+import urllib.parse
 import streamlit as st
 
 # ── Human-readable column labels ──────────────────────────────────────────
@@ -51,54 +51,57 @@ def col_label(name):
     return COLUMN_LABELS.get(name, name.replace("_", " ").title())
 
 
-# ── Plotly professional light template ────────────────────────────────────
+# ── Plotly layout tailored with luxury gold palette ───────────────────────
 
 PLOTLY_LAYOUT = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#334155", family="'Inter', 'Open Sans', sans-serif", size=13),
-    xaxis=dict(gridcolor="#e2e8f0", zerolinecolor="#cbd5e1", tickfont=dict(color="#64748b")),
-    yaxis=dict(gridcolor="#e2e8f0", zerolinecolor="#cbd5e1", tickfont=dict(color="#64748b")),
-    colorway=["#1d4ed8", "#0d9488", "#d97706", "#7c3aed", "#2563eb",
-              "#059669", "#dc2626", "#475569", "#0284c7", "#ca8a04"],
+    font=dict(color="#222222", family="'Roboto', 'Outfit', sans-serif", size=13),
+    xaxis=dict(gridcolor="#e5e7eb", zerolinecolor="#cbd5e1", tickfont=dict(color="#666666")),
+    yaxis=dict(gridcolor="#e5e7eb", zerolinecolor="#cbd5e1", tickfont=dict(color="#666666")),
+    colorway=["#968340", "#004274", "#b7a775", "#16a34a", "#0284c7",
+              "#7c3aed", "#d97706", "#dc2626", "#334155", "#059669"],
     margin=dict(l=40, r=20, t=40, b=40),
-    hoverlabel=dict(bgcolor="#ffffff", font_color="#0f172a", bordercolor="#1d4ed8"),
+    hoverlabel=dict(bgcolor="#ffffff", font_color="#222222", bordercolor="#968340"),
 )
 
 
-# ── SVGs ──────────────────────────────────────────────────────────────────
+# ── SVGs & Logos ──────────────────────────────────────────────────────────
 
-ICON_SVG = """
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="38" height="38">
+GOLD_CREST_SVG = """
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="38" height="38">
   <defs>
-    <linearGradient id="eqGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1d4ed8"/>
-      <stop offset="100%" stop-color="#2563eb"/>
+    <linearGradient id="eqGoldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b7a775"/>
+      <stop offset="50%" stop-color="#968340"/>
+      <stop offset="100%" stop-color="#7a692e"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="96" height="96" rx="16" fill="url(#eqGrad)"/>
-  <path d="M48 20 L76 42 L68 42 L68 76 L28 76 L28 42 L20 42 Z" fill="#ffffff" opacity="0.95"/>
-  <rect x="42" y="52" width="12" height="24" rx="2" fill="#1d4ed8"/>
-  <circle cx="58" cy="38" r="4" fill="#ffffff"/>
+  <rect x="4" y="4" width="92" height="92" rx="18" fill="url(#eqGoldGrad)"/>
+  <path d="M50 20 L80 44 L72 44 L72 78 L28 78 L28 44 L20 44 Z" fill="#ffffff" opacity="0.96"/>
+  <path d="M42 54 L58 54 L58 78 L42 78 Z" fill="#968340"/>
+  <polygon points="50,29 64,40 36,40" fill="#968340"/>
+  <circle cx="50" cy="46" r="3" fill="#ffffff"/>
 </svg>
 """
 
-LOGO_SVG = """
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 84" width="290" height="68">
+ESTATEIQ_LOGO_SVG = """
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 76" width="280" height="64">
   <defs>
-    <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1e3a8a"/>
-      <stop offset="100%" stop-color="#1d4ed8"/>
+    <linearGradient id="logoGoldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b7a775"/>
+      <stop offset="50%" stop-color="#968340"/>
+      <stop offset="100%" stop-color="#7a692e"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="2" width="80" height="80" rx="14" fill="url(#logoGrad)"/>
-  <path d="M40 18 L66 38 L58 38 L58 68 L22 68 L22 38 L14 38 Z" fill="#ffffff"/>
-  <rect x="34" y="46" width="12" height="22" rx="2" fill="#1d4ed8"/>
-  <circle cx="50" cy="32" r="3.5" fill="#ffffff"/>
-  <text x="96" y="46" font-family="'Inter', 'Open Sans', sans-serif"
-        font-size="29" font-weight="800" fill="#0f172a" letter-spacing="-0.5">EstateIQ</text>
-  <text x="97" y="66" font-family="'Inter', sans-serif"
-        font-size="10" font-weight="700" letter-spacing="2.2" fill="#1d4ed8">REAL ESTATE INTELLIGENCE</text>
+  <rect x="0" y="2" width="72" height="72" rx="14" fill="url(#logoGoldGrad)"/>
+  <path d="M36 16 L60 36 L53 36 L53 64 L19 64 L19 36 L12 36 Z" fill="#ffffff"/>
+  <rect x="30" y="44" width="12" height="20" rx="2" fill="#968340"/>
+  <circle cx="44" cy="30" r="3" fill="#ffffff"/>
+  <text x="86" y="42" font-family="'Playfair Display', 'Roboto', serif"
+        font-size="28" font-weight="700" fill="#111827" letter-spacing="0.5">EstateIQ</text>
+  <text x="88" y="62" font-family="'Roboto', sans-serif"
+        font-size="9.5" font-weight="600" letter-spacing="2.4" fill="#968340">GURUGRAM REAL ESTATE INTELLIGENCE</text>
 </svg>
 """
 
@@ -107,31 +110,41 @@ LOGO_SVG = """
 
 def _image_to_base64(path):
     """Read an image file and return its base64-encoded data URI."""
+    if not path:
+        return None
     if not os.path.isabs(path):
         path = os.path.join(os.path.dirname(__file__), path)
     if not os.path.exists(path):
         return None
-    with open(path, "rb") as f:
-        data = base64.b64encode(f.read()).decode()
-    ext = os.path.splitext(path)[1].lstrip(".").lower()
-    mime = {"jpg": "jpeg", "jpeg": "jpeg", "png": "png", "webp": "webp"}.get(ext, "jpeg")
-    return f"data:image/{mime};base64,{data}"
+    try:
+        with open(path, "rb") as f:
+            data = base64.b64encode(f.read()).decode()
+        ext = os.path.splitext(path)[1].lstrip(".").lower()
+        mime = {
+            "jpg": "jpeg", "jpeg": "jpeg", "png": "png",
+            "webp": "webp", "avif": "avif"
+        }.get(ext, "jpeg")
+        return f"data:image/{mime};base64,{data}"
+    except Exception:
+        return None
 
 
-# ── CSS design system (Light Professional Edition — Housing.com inspired) ─
+# ── CSS Design System (Luxury Gold & Navy Proptech Edition) ───────────────
 
 DESIGN_CSS = """
-/* ─── BASE STYLING (SOOTHING SOFT-SLATE & SAPPHIRE NAVY) ─── */
+/* ─── BASE TYPOGRAPHY & PALETTE ─── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap');
+
 html, body, [class*="css"] {
-    font-family: 'Inter', 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    background-color: #edf0f5 !important;
-    color: #0f172a !important;
+    font-family: 'Roboto', 'Outfit', -apple-system, sans-serif !important;
+    background-color: #f8f8f8 !important;
+    color: #222222 !important;
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: 'Inter', 'Open Sans', sans-serif !important;
+    font-family: 'Playfair Display', 'Roboto', Georgia, serif !important;
     font-weight: 700 !important;
-    color: #0f172a !important;
+    color: #111827 !important;
     letter-spacing: -0.01em;
 }
 
@@ -140,165 +153,388 @@ footer { visibility: hidden; }
 
 /* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #e2e8f0; }
-::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #64748b; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #968340; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #7a692e; }
 
-/* ─── SIDEBAR (SOFT SLATE) ─── */
+/* ─── LUXURY TOP STATUS RIBBON (CLEAN / NO THIRD PARTY DATA) ─── */
+.luxury-top-ribbon {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 0.5rem 1.4rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #968340;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.luxury-ribbon-tag {
+    background: #968340;
+    color: #ffffff;
+    font-size: 0.72rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 3px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* ─── SIDEBAR (LUXURY GOLD & SLATE) ─── */
 [data-testid="stSidebar"] {
-    background: #f4f6f9 !important;
-    border-right: 1px solid #d8dde6 !important;
-    box-shadow: 2px 0 10px rgba(15, 23, 42, 0.04) !important;
+    background: #ffffff !important;
+    border-right: 1px solid #e5e7eb !important;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.04) !important;
 }
 [data-testid="stSidebarNav"] a {
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    padding: 0.6rem 0.9rem !important;
-    border-radius: 8px !important;
+    font-size: 0.92rem !important;
+    font-weight: 500 !important;
+    padding: 0.65rem 0.95rem !important;
+    border-radius: 6px !important;
     transition: all 0.2s ease !important;
-    color: #334155 !important;
+    color: #333333 !important;
 }
 [data-testid="stSidebarNav"] a:hover {
-    background: #e0e7ff !important;
-    color: #1d4ed8 !important;
+    background: #fdfaf3 !important;
+    color: #968340 !important;
 }
-[data-testid="stSidebarNav"] li { margin-bottom: 0.15rem; }
-
+[data-testid="stSidebarNav"] [aria-current="page"] {
+    background: #f8f4ea !important;
+    color: #968340 !important;
+    border-left: 3px solid #968340 !important;
+    font-weight: 700 !important;
+}
 .sidebar-brand {
-    display: flex; align-items: center; gap: 0.75rem;
-    padding: 0.8rem 0; margin-bottom: 0.5rem;
-    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 0;
+    margin-bottom: 0.8rem;
+    border-bottom: 1.5px solid #f0ede6;
 }
 .sidebar-brand-name {
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 800; font-size: 1.25rem;
-    color: #0f172a;
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #111827;
 }
 .sidebar-caption {
-    color: #1d4ed8; font-size: 0.72rem; margin-top: -0.1rem;
-    font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    color: #968340;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
-/* ─── HERO IMAGE BANNER ─── */
-.hero-image-wrap {
+/* ─── HERO SECTION (LUXURY PHOTO BANNER) ─── */
+.luxury-hero-wrap {
     position: relative;
     width: 100%;
-    min-height: 320px;
-    border-radius: 16px;
+    min-height: 380px;
+    border-radius: 14px;
     overflow: hidden;
     margin-bottom: 1.8rem;
     background-size: cover;
-    background-position: center 40%;
+    background-position: center center;
     background-repeat: no-repeat;
-    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(150, 131, 64, 0.3);
 }
-.hero-overlay {
+.luxury-hero-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
         180deg,
-        rgba(15, 23, 42, 0.2) 0%,
-        rgba(15, 23, 42, 0.45) 45%,
-        rgba(15, 23, 42, 0.8) 100%
+        rgba(0, 20, 40, 0.35) 0%,
+        rgba(17, 24, 39, 0.6) 45%,
+        rgba(10, 15, 25, 0.88) 100%
     );
     z-index: 1;
 }
-.hero-content {
+.luxury-hero-content {
     position: relative;
     z-index: 2;
-    padding: 2.8rem 2.4rem 2.2rem 2.4rem;
+    padding: 2.6rem 2.4rem 2.2rem 2.4rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    min-height: 320px;
+    min-height: 380px;
 }
-.hero-badge-pill {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #ffffff; padding: 0.35rem 1rem;
-    border-radius: 20px; font-size: 0.82rem; font-weight: 600;
+.luxury-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #968340;
+    color: #ffffff;
+    padding: 0.35rem 1rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     margin-bottom: 0.8rem;
     width: fit-content;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
-.hero-page-title {
-    font-size: 2.4rem; font-weight: 800;
-    color: #ffffff !important; margin: 0 0 0.5rem 0;
-    letter-spacing: -0.02em;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-    line-height: 1.15;
+.luxury-hero-title {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #ffffff !important;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.18;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
-.hero-tagline {
-    color: #f1f5f9; font-size: 1.05rem;
-    margin: 0; max-width: 680px; line-height: 1.6;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+.luxury-hero-subtitle {
+    color: #e5e7eb;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    margin: 0 0 1.2rem 0;
+    max-width: 720px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
-.hero-stats-row {
-    display: flex; gap: 1.5rem; margin-top: 1.2rem;
+.luxury-hero-stats {
+    display: flex;
+    gap: 1rem;
     flex-wrap: wrap;
+    margin-top: 0.4rem;
 }
-.hero-stat {
-    display: flex; flex-direction: column;
-    padding: 0.5rem 0.9rem;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 10px;
+.luxury-hero-stat-pill {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-left: 3px solid #968340;
+    border-radius: 6px;
+    padding: 0.45rem 0.9rem;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     min-width: 110px;
 }
-.hero-stat-value {
-    font-size: 1.3rem; font-weight: 800; color: #ffffff;
-    line-height: 1.2;
+.luxury-hero-stat-val {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.15;
 }
-.hero-stat-label {
-    font-size: 0.72rem; color: rgba(255,255,255,0.85); font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.04em;
+.luxury-hero-stat-lbl {
+    color: #d1d5db;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     margin-top: 0.1rem;
 }
 
-/* ─── FALLBACK HERO (no image) ─── */
-.hero-portal-wrap {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #2563eb 100%);
-    border: none;
-    border-radius: 16px;
-    padding: 2.2rem 1.8rem 2rem 1.8rem;
-    margin-bottom: 1.8rem;
-    color: #ffffff;
-    box-shadow: 0 6px 24px rgba(29, 78, 216, 0.25);
-    position: relative;
-    overflow: hidden;
+/* ─── PLATFORM SPOTLIGHT BANNER ─── */
+.portal-spotlight-box {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-top: 3px solid #968340;
+    border-radius: 12px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
-.hero-portal-wrap::after {
-    content: '';
-    position: absolute; right: -40px; bottom: -40px;
-    width: 240px; height: 240px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none;
+.portal-spotlight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
+.portal-spotlight-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+.portal-spotlight-badge {
+    background: #fdfaf3;
+    color: #968340;
+    border: 1px solid #e8dec5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+.portal-spotlight-body {
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 1rem;
+}
+.portal-cta-btn {
+    background-color: #968340;
+    color: #ffffff !important;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.45rem 1.1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid #b7a775;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    box-shadow: 0 2px 6px rgba(150, 131, 64, 0.25);
+}
+.portal-cta-btn:hover {
+    background-color: #b7a775;
+    transform: translateY(-1px);
+    color: #ffffff !important;
 }
 
-/* ─── NAVIGATION TABS BAR ─── */
-.search-tabs-bar {
-    display: flex; gap: 0.5rem; margin-bottom: 1.2rem;
-    border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem;
+/* ─── FEATURED PROJECTS SECTION ─── */
+.featured-section-header {
+    text-align: center;
+    margin: 2.2rem 0 1.2rem 0;
 }
-.search-tab-item {
-    font-size: 0.92rem; font-weight: 600; color: #64748b;
-    background: transparent;
-    border: none;
-    padding: 0.45rem 1rem; border-radius: 6px; cursor: default;
-    transition: all 0.2s ease;
-}
-.search-tab-item:hover {
-    color: #1d4ed8; background: #e0e7ff;
-}
-.search-tab-item.active {
-    color: #1d4ed8; background: #e0e7ff;
-    border-bottom: 2px solid #1d4ed8;
+.featured-section-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.9rem;
     font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.3rem;
+}
+.featured-section-subtitle {
+    color: #968340;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.featured-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+    margin-bottom: 2.2rem;
+}
+@media (max-width: 992px) {
+    .featured-projects-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+    .featured-projects-grid { grid-template-columns: 1fr; }
+    .luxury-hero-title { font-size: 1.85rem !important; }
+}
+.luxury-project-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+.luxury-project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    border-color: #968340;
+}
+.luxury-project-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f1f1f1;
+}
+.luxury-project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+.luxury-project-card:hover .luxury-project-img {
+    transform: scale(1.05);
+}
+.luxury-project-tag-wrap {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    z-index: 2;
+}
+.luxury-status-pill {
+    background: #968340;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.luxury-nri-pill {
+    background: #004274;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.luxury-project-body {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.luxury-project-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.2rem;
+}
+.luxury-project-address {
+    color: #6b7280;
+    font-size: 0.82rem;
+    margin-bottom: 0.75rem;
+}
+.luxury-project-price {
+    color: #968340;
+    font-size: 1.08rem;
+    font-weight: 800;
+    margin-bottom: 0.85rem;
+    font-family: 'Roboto', sans-serif;
+}
+.luxury-project-btn {
+    display: block;
+    text-align: center;
+    background: #968340;
+    color: #ffffff !important;
+    padding: 0.45rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: auto;
+    transition: all 0.2s;
+    border: 1px solid #968340;
+}
+.luxury-project-btn:hover {
+    background: #b7a775;
+    border-color: #b7a775;
+    color: #ffffff !important;
 }
 
 /* ─── FEATURE SHOWCASE CARDS ─── */
@@ -310,416 +546,439 @@ footer { visibility: hidden; }
 }
 @media (max-width: 768px) {
     .feature-grid { grid-template-columns: 1fr; }
-    .hero-page-title { font-size: 1.8rem !important; }
-    .hero-content { padding: 1.5rem 1.2rem 1.5rem 1.2rem !important; min-height: 260px !important; }
-    .hero-image-wrap { min-height: 260px !important; }
 }
 @media (max-width: 1024px) and (min-width: 769px) {
     .feature-grid { grid-template-columns: repeat(2, 1fr); }
 }
 .feature-card {
     position: relative;
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
     background: #ffffff;
-    border: 1px solid #d8dde6;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
     transition: all 0.25s ease;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
 .feature-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
-    border-color: #1d4ed8;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    border-color: #968340;
 }
 .feature-card-link {
     text-decoration: none !important;
     color: inherit !important;
     display: block;
-    cursor: pointer;
     height: 100%;
 }
 .feature-card-image {
     width: 100%;
-    height: 160px;
+    height: 165px;
     object-fit: cover;
     display: block;
-    transition: transform 0.3s ease;
+    transition: transform 0.35s ease;
 }
 .feature-card:hover .feature-card-image {
-    transform: scale(1.03);
+    transform: scale(1.04);
 }
 .feature-card-body {
-    padding: 1.1rem 1.2rem 1.2rem 1.2rem;
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 .feature-card-icon {
-    font-size: 1.6rem;
-    margin-bottom: 0.3rem;
+    font-size: 1.45rem;
+    margin-bottom: 0.25rem;
 }
 .feature-card-title {
-    font-size: 1.05rem; font-weight: 700; color: #0f172a;
-    margin-bottom: 0.3rem;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.25rem;
 }
 .feature-card-desc {
-    font-size: 0.86rem; color: #475569; line-height: 1.5;
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
 }
 .feature-card-tag {
+    margin-top: auto;
     display: inline-block;
-    margin-top: 0.7rem;
-    background: #eff6ff;
-    color: #1d4ed8;
+    background: #fdfaf3;
+    color: #968340;
     padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
+    border-radius: 4px;
+    font-size: 0.76rem;
     font-weight: 700;
-    border: 1px solid #bfdbfe;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    border: 1px solid #e8dec5;
+    letter-spacing: 0.04em;
+    width: fit-content;
+    transition: all 0.2s;
 }
 .feature-card:hover .feature-card-tag {
-    background: #1d4ed8;
+    background: #968340;
     color: #ffffff;
-    border-color: #1d4ed8;
-}
-
-/* ─── CARDS & SURFACES ─── */
-.glass-card, .portal-card {
-    background: #ffffff !important;
-    border: 1px solid #d8dde6 !important;
-    border-radius: 12px !important;
-    padding: 1.5rem !important;
-    margin-bottom: 1.2rem !important;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
-}
-.glass-card:hover, .portal-card:hover {
-    border-color: #cbd5e1 !important;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.09) !important;
+    border-color: #968340;
 }
 
 /* ─── VALUATION / PREDICTION PANEL ─── */
 .prediction-panel {
     background: #ffffff !important;
-    border: 1px solid #d8dde6 !important;
-    border-top: 4px solid #1d4ed8 !important;
+    border: 1px solid #e5e7eb !important;
+    border-top: 4px solid #968340 !important;
     border-radius: 12px !important;
-    padding: 2.4rem 1.8rem !important;
+    padding: 2.2rem 1.8rem !important;
     text-align: center;
     margin: 1.6rem 0 !important;
-    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.07) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05) !important;
     position: relative;
-    overflow: hidden;
 }
 .prediction-header-badge {
     display: inline-block;
-    background: #1d4ed8;
+    background: #968340;
     color: #ffffff;
-    padding: 0.35rem 1.2rem; border-radius: 6px;
-    font-size: 0.8rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.35rem 1.2rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     margin-bottom: 0.8rem;
 }
 .price-label {
-    font-size: 0.88rem; color: #64748b; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem;
+    font-size: 0.86rem;
+    color: #6b7280;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2rem;
 }
 .price-main {
-    font-size: 3.2rem; font-weight: 800;
-    color: #0f172a !important; line-height: 1.15;
-    letter-spacing: -0.02em; margin: 0.2rem 0;
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #111827 !important;
+    line-height: 1.15;
+    margin: 0.2rem 0;
+    font-family: 'Roboto', sans-serif;
 }
 .price-per-sqft {
     display: inline-block;
-    background: #eff6ff; color: #1d4ed8;
-    padding: 0.4rem 1rem; border-radius: 6px;
-    font-size: 0.95rem; font-weight: 700; margin: 0.4rem 0 1.2rem 0;
-    border: 1px solid #bfdbfe;
+    background: #fdfaf3;
+    color: #968340;
+    padding: 0.35rem 1rem;
+    border-radius: 4px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin: 0.4rem 0 1.2rem 0;
+    border: 1px solid #e8dec5;
 }
 .price-range {
-    display: flex; justify-content: center; gap: 3rem; margin-top: 1rem;
-    padding-top: 1rem; border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0ede6;
 }
 .price-range-item { text-align: center; }
 .price-range-value {
-    font-size: 1.3rem; font-weight: 700; color: #1d4ed8;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #968340;
 }
 .price-range-label {
-    font-size: 0.82rem; color: #64748b; margin-top: 0.2rem; font-weight: 600;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 0.2rem;
+    font-weight: 600;
 }
 
-/* ─── KPI METRICS with animation ─── */
-@keyframes kpiSlideUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
+/* ─── KPI METRICS ─── */
 .kpi-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 1rem; margin-bottom: 1.8rem;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
 }
 .kpi-card {
     background: #ffffff;
-    border: 1px solid #d8dde6;
-    border-top: 3px solid #1d4ed8;
-    border-radius: 10px; padding: 1.1rem 1rem; text-align: center;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    border: 1px solid #e5e7eb;
+    border-top: 3px solid #968340;
+    border-radius: 8px;
+    padding: 1.1rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    animation: kpiSlideUp 0.4s ease-out both;
 }
-.kpi-card:nth-child(1) { animation-delay: 0s; }
-.kpi-card:nth-child(2) { animation-delay: 0.06s; border-top-color: #0d9488; }
-.kpi-card:nth-child(3) { animation-delay: 0.12s; border-top-color: #d97706; }
-.kpi-card:nth-child(4) { animation-delay: 0.18s; border-top-color: #7c3aed; }
 .kpi-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+    border-top-color: #b7a775;
 }
-.kpi-icon { font-size: 1.4rem; margin-bottom: 0.3rem; }
+.kpi-icon { font-size: 1.35rem; margin-bottom: 0.25rem; }
 .kpi-value {
-    font-size: 1.5rem; font-weight: 800; color: #0f172a; line-height: 1.2;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.2;
 }
 .kpi-label {
-    font-size: 0.8rem; color: #64748b; margin-top: 0.3rem; font-weight: 600;
+    font-size: 0.78rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+    font-weight: 600;
 }
 
-/* ─── RECOMMENDATION LISTING CARDS ─── */
-@keyframes recCardSlideIn {
-    from { opacity: 0; transform: translateX(-8px); }
-    to   { opacity: 1; transform: translateX(0); }
-}
+/* ─── RECOMMENDATION PROPERTY CARDS ─── */
 .rec-card {
     background: #ffffff;
-    border: 1px solid #d8dde6;
-    border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 0.8rem;
-    border-left: 4px solid #1d4ed8;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 0.9rem;
+    border-left: 4px solid #968340;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    animation: recCardSlideIn 0.35s ease-out both;
 }
 .rec-card:hover {
     transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
-.rec-card.type-location  { border-left-color: #2563eb; }
-.rec-card.type-budget    { border-left-color: #d97706; }
-.rec-card.type-config    { border-left-color: #059669; }
+.rec-card.type-location  { border-left-color: #004274; }
+.rec-card.type-budget    { border-left-color: #968340; }
+.rec-card.type-config    { border-left-color: #16a34a; }
 .rec-card.type-landmark  { border-left-color: #7c3aed; }
-.rec-card.type-match     { border-left-color: #1d4ed8; }
+.rec-card.type-match     { border-left-color: #968340; }
 
+.rec-thumb-img {
+    width: 110px;
+    height: 82px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
 .rec-name {
-    font-weight: 700; font-size: 1.05rem; color: #0f172a; margin-bottom: 0.2rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #111827;
+    margin-bottom: 0.15rem;
 }
 .rec-locality {
-    font-size: 0.86rem; color: #64748b; font-weight: 500;
+    font-size: 0.84rem;
+    color: #6b7280;
+    font-weight: 500;
 }
 .rec-price {
-    font-weight: 800; color: #1d4ed8; font-size: 1.1rem;
+    font-weight: 800;
+    color: #968340;
+    font-size: 1.12rem;
+    font-family: 'Roboto', sans-serif;
 }
 .bhk-badge {
     display: inline-block;
-    background: #eff6ff; color: #1d4ed8;
-    padding: 0.2rem 0.55rem; border-radius: 4px;
-    font-size: 0.76rem; font-weight: 700; margin-right: 0.3rem;
-    border: 1px solid #bfdbfe;
+    background: #fdfaf3;
+    color: #968340;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    margin-right: 0.3rem;
+    border: 1px solid #e8dec5;
 }
 .verified-tag {
     display: inline-block;
-    background: #f0fdf4; color: #16a34a;
-    padding: 0.15rem 0.5rem; border-radius: 4px;
-    font-size: 0.7rem; font-weight: 700; margin-left: 0.4rem;
+    background: #f0fdf4;
+    color: #16a34a;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-left: 0.35rem;
     border: 1px solid #bbf7d0;
 }
 .featured-tag {
     display: inline-block;
-    background: #fffbeb; color: #d97706;
-    padding: 0.15rem 0.55rem; border-radius: 4px;
-    font-size: 0.7rem; font-weight: 700; margin-left: 0.4rem;
-    border: 1px solid #fde68a;
+    background: #968340;
+    color: #ffffff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-left: 0.35rem;
 }
 .rec-link {
     display: inline-block;
-    background: #1d4ed8;
+    background: #968340;
     color: #ffffff !important;
-    padding: 0.4rem 1rem; border-radius: 6px;
-    text-decoration: none; font-size: 0.84rem; font-weight: 700;
+    padding: 0.38rem 0.95rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     transition: background 0.2s, transform 0.15s;
-    box-shadow: 0 2px 6px rgba(29, 78, 216, 0.2);
+    box-shadow: 0 2px 6px rgba(150, 131, 64, 0.25);
 }
 .rec-link:hover {
-    background: #1e40af;
+    background: #b7a775;
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(29, 78, 216, 0.3);
+    box-shadow: 0 4px 10px rgba(150, 131, 64, 0.35);
 }
 
 /* ─── GRADIENT DIVIDER ─── */
 .gradient-divider {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, #968340, transparent);
     margin: 2rem 0;
     border: none;
+    opacity: 0.45;
 }
 
-/* ─── FOOTER ─── */
-.site-footer {
-    margin-top: 3rem;
-    padding: 1.5rem 1.2rem;
-    text-align: center;
-    font-size: 0.82rem;
-    color: #64748b;
-    border-top: 1px solid #cbd5e1;
-    background: #e2e8f0;
-    border-radius: 0 0 12px 12px;
+/* ─── LUXURY DARK FOOTER (ESTATEIQ / NO THIRD PARTY DATA) ─── */
+.luxury-footer {
+    background: #000000;
+    color: #ffffff;
+    padding: 2.8rem 1.8rem 1.8rem 1.8rem;
+    margin-top: 3.5rem;
+    border-radius: 12px 12px 0 0;
+    border-top: 3px solid #968340;
 }
-.footer-brand {
+.luxury-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .luxury-footer-grid { grid-template-columns: 1fr; }
+}
+.luxury-footer-brand-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: #334155;
-    margin-bottom: 0.3rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+.luxury-footer-desc {
+    color: #9ca3af;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+.luxury-footer-col-title {
+    color: #968340;
+    font-family: 'Roboto', sans-serif;
     font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+}
+.luxury-footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.luxury-footer-links li {
+    margin-bottom: 0.45rem;
+}
+.luxury-footer-links a {
+    color: #d1d5db !important;
+    text-decoration: none;
+    font-size: 0.84rem;
+    transition: color 0.2s;
+}
+.luxury-footer-links a:hover {
+    color: #968340 !important;
+}
+.luxury-footer-bottom {
+    border-top: 1px solid #222222;
+    padding-top: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    font-size: 0.8rem;
+    color: #6b7280;
 }
 
-/* ─── STREAMLIT TABS ─── */
-@keyframes tabFadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
+/* ─── STREAMLIT UI OVERRIDES ─── */
 [data-testid="stTabs"] [data-baseweb="tab-list"] {
-    gap: 0.3rem;
-    border-bottom: 2px solid #cbd5e1;
-    padding-bottom: 0;
+    gap: 0.4rem;
+    border-bottom: 2px solid #e5e7eb;
     background: transparent;
 }
 [data-testid="stTabs"] [data-baseweb="tab"] {
     background: transparent !important;
     border: none !important;
     border-bottom: 2px solid transparent !important;
-    border-radius: 0 !important;
-    color: #64748b !important;
+    color: #6b7280 !important;
     font-weight: 600 !important;
     font-size: 0.94rem !important;
-    padding: 0.6rem 1.2rem !important;
+    padding: 0.65rem 1.2rem !important;
     transition: all 0.2s ease !important;
     margin-bottom: -2px !important;
 }
 [data-testid="stTabs"] [data-baseweb="tab"]:hover {
-    color: #1d4ed8 !important;
+    color: #968340 !important;
 }
 [data-testid="stTabs"] [aria-selected="true"] {
-    color: #1d4ed8 !important;
-    border-bottom: 2px solid #1d4ed8 !important;
+    color: #968340 !important;
+    border-bottom: 2px solid #968340 !important;
     font-weight: 700 !important;
 }
 [data-testid="stTabs"] [data-baseweb="tab-highlight"] {
-    background-color: #1d4ed8 !important;
-}
-[data-testid="stTabs"] [data-baseweb="tab-panel"] {
-    animation: tabFadeIn 0.3s ease-out;
+    background-color: #968340 !important;
 }
 
-/* ─── SECTION HEADERS ─── */
-.rec-section-header {
-    font-size: 1.12rem; font-weight: 700; color: #0f172a;
-    margin: 1rem 0 0.3rem 0;
+button[kind="primary"], .stButton > button {
+    background: linear-gradient(135deg, #968340 0%, #7a692e 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #968340 !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1.5rem !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 3px 8px rgba(150, 131, 64, 0.25) !important;
 }
-.rec-section-note {
-    font-size: 0.86rem; color: #475569; margin-bottom: 0.8rem;
-    line-height: 1.4;
+button[kind="primary"]:hover, .stButton > button:hover {
+    background: linear-gradient(135deg, #b7a775 0%, #968340 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(150, 131, 64, 0.35) !important;
 }
 
-/* ─── GLOBAL SELECTBOX & DROPDOWNS ─── */
 div[data-baseweb="select"] > div {
     background-color: #ffffff !important;
-    border: 1.5px solid #cbd5e1 !important;
-    border-radius: 8px !important;
-    color: #0f172a !important;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+    border: 1.5px solid #d1d5db !important;
+    border-radius: 6px !important;
+    color: #111827 !important;
     transition: all 0.2s ease !important;
-    min-height: 40px !important;
 }
 div[data-baseweb="select"] > div:hover {
-    border-color: #1d4ed8 !important;
+    border-color: #968340 !important;
 }
-div[data-baseweb="select"] span {
-    color: #0f172a !important;
-    font-weight: 500 !important;
-}
-div[data-baseweb="select"] svg {
-    fill: #64748b !important;
-}
-div[data-baseweb="popover"], ul[data-baseweb="menu"] {
-    background-color: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    border-radius: 8px !important;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1) !important;
-}
-ul[data-baseweb="menu"] li {
-    color: #0f172a !important;
-    font-weight: 500 !important;
-    padding: 0.55rem 1rem !important;
-}
-ul[data-baseweb="menu"] li:hover,
-ul[data-baseweb="menu"] li[aria-selected="true"] {
-    background-color: #eff6ff !important;
-    color: #1d4ed8 !important;
-}
-
-/* ─── EXPANDER STYLING ─── */
-[data-testid="stExpander"] {
-    border: 1px solid #d8dde6 !important;
-    border-radius: 10px !important;
-    background: #ffffff !important;
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03) !important;
-}
-[data-testid="stExpander"] summary {
-    font-weight: 600 !important;
-    color: #0f172a !important;
-}
-
-/* ─── STREAMLIT INPUTS ─── */
 [data-testid="stTextInput"] input,
 [data-testid="stNumberInput"] input,
 [data-testid="stTextArea"] textarea {
     background-color: #ffffff !important;
-    border: 1.5px solid #cbd5e1 !important;
-    border-radius: 8px !important;
-    color: #0f172a !important;
+    border: 1.5px solid #d1d5db !important;
+    border-radius: 6px !important;
+    color: #111827 !important;
 }
 [data-testid="stTextInput"] input:focus,
 [data-testid="stNumberInput"] input:focus {
-    border-color: #1d4ed8 !important;
-    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.15) !important;
-}
-
-/* ─── STREAMLIT BUTTONS ─── */
-button[kind="primary"], .stButton > button {
-    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
-    color: #ffffff !important;
-    border: 1px solid #1d4ed8 !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    padding: 0.5rem 1.5rem !important;
-    transition: all 0.2s ease !important;
-    box-shadow: 0 2px 8px rgba(29, 78, 216, 0.2) !important;
-}
-button[kind="primary"]:hover, .stButton > button:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(29, 78, 216, 0.3) !important;
-}
-
-/* ─── METRICS ─── */
-[data-testid="stMetric"] {
-    background: #ffffff;
-    border: 1px solid #d8dde6;
-    border-radius: 10px;
-    padding: 1rem;
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
-}
-[data-testid="stMetric"] label {
-    color: #64748b !important;
-}
-[data-testid="stMetric"] [data-testid="stMetricValue"] {
-    color: #0f172a !important;
+    border-color: #968340 !important;
+    box-shadow: 0 0 0 2px rgba(150, 131, 64, 0.2) !important;
 }
 """
 
@@ -729,20 +988,38 @@ button[kind="primary"]:hover, .stButton > button:hover {
 # ══════════════════════════════════════════════════════════════════════════
 
 def apply_theme():
-    """Inject the portal light design system CSS + Google Fonts + sidebar branding."""
-    st.markdown(
-        '<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800'
-        '&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">',
-        unsafe_allow_html=True,
-    )
+    """Inject the luxury design system CSS + Google Fonts + top ribbon + sidebar branding."""
     st.markdown(f"<style>{DESIGN_CSS}</style>", unsafe_allow_html=True)
     _render_sidebar()
+
+
+def render_top_ribbon():
+    """Render the sleek luxury dark status ribbon."""
+    ribbon_html = (
+        '<div class="luxury-top-ribbon">'
+        '<div style="display:flex; align-items:center; gap:0.9rem; flex-wrap:wrap;">'
+        '<span style="color:#ffffff; font-weight:600;">EstateIQ Gurugram</span>'
+        '<span style="color:#d1d5db;">|</span>'
+        '<span style="color:#d1d5db;">Real Estate Valuation & Property Intelligence</span>'
+        '</div>'
+        '<div style="display:flex; align-items:center; gap:0.6rem;">'
+        '<span class="luxury-ribbon-tag">RERA Audited</span>'
+        '<span style="color:#b7a775; font-size:0.8rem; font-weight:500;">Turning Vision Into Reality</span>'
+        '</div>'
+        '</div>'
+    )
+    st.markdown(ribbon_html, unsafe_allow_html=True)
+
+
+# Backwards compatibility alias
+def render_plush_topbar():
+    render_top_ribbon()
 
 
 def _render_sidebar():
     """Styled sidebar branding."""
     st.sidebar.markdown(
-        f'<div class="sidebar-brand">{ICON_SVG}'
+        f'<div class="sidebar-brand">{GOLD_CREST_SVG}'
         f'<div><div class="sidebar-brand-name">EstateIQ</div>'
         f'<div class="sidebar-caption">Gurugram Property Intelligence</div>'
         f'</div></div>',
@@ -750,69 +1027,185 @@ def _render_sidebar():
     )
 
 
-def render_hero(title, tagline, show_logo=False, image_path=None,
+def render_hero(title=None, tagline=None, show_logo=True, image_path=None,
                 hero_stats=None):
-    """Render a portal header banner.
+    """Render the luxury hero banner with user's front photo.
 
-    If *image_path* points to a valid image, the hero uses a full-bleed
-    background image with a dark gradient overlay.
-    Otherwise falls back to a red gradient banner.
-
-    *hero_stats* is an optional list of (value, label) tuples shown as
-    frosted-glass stat pills at the bottom of the hero.
+    Defaults to the user's uploaded front photo (`static/user_front_image.png`).
     """
-    logo_html = f'<div style="margin-bottom:0.8rem;">{LOGO_SVG}</div>' if show_logo else ""
-    badge_html = '<div class="hero-badge-pill">✓ Gurugram Real Estate Intelligence</div>'
+    effective_img = None
+    candidates = [image_path, "static/user_front_image.png", "static/plush_luxury_hero.jpg", "static/hero_banner.jpg"]
+    for c in candidates:
+        if c and os.path.exists(c):
+            effective_img = c
+            break
 
-    # Stats row
+    data_uri = _image_to_base64(effective_img) if effective_img else None
+
+    h_title = title or "Turning Vision Into Reality"
+    h_tagline = tagline or "Residential Floors | Luxury Apartments | Commercial SCO | Plots across Gurugram"
+
+    badge_html = '<div class="luxury-hero-badge">✨ Real Estate Intelligence · Gurugram</div>'
+
     stats_html = ""
     if hero_stats:
         items = "".join(
-            f'<div class="hero-stat">'
-            f'<div class="hero-stat-value">{v}</div>'
-            f'<div class="hero-stat-label">{l}</div></div>'
+            f'<div class="luxury-hero-stat-pill">'
+            f'<div class="luxury-hero-stat-val">{v}</div>'
+            f'<div class="luxury-hero-stat-lbl">{l}</div></div>'
             for v, l in hero_stats
         )
-        stats_html = f'<div class="hero-stats-row">{items}</div>'
+        stats_html = f'<div class="luxury-hero-stats">{items}</div>'
 
-    # Try image hero
-    data_uri = _image_to_base64(image_path) if image_path else None
+    bg_style = f"background-image:url({data_uri});" if data_uri else "background: linear-gradient(135deg, #004274 0%, #002244 100%);"
+    logo_html = f'<div style="margin-bottom:0.7rem;">{ESTATEIQ_LOGO_SVG}</div>' if show_logo else ""
 
-    if data_uri:
-        st.markdown(
-            f'<div class="hero-image-wrap" style="background-image:url({data_uri});">'
-            f'<div class="hero-overlay"></div>'
-            f'<div class="hero-content">'
-            f'{badge_html}'
-            f'{logo_html}'
-            f'<div class="hero-page-title">{title}</div>'
-            f'<div class="hero-tagline">{tagline}</div>'
-            f'{stats_html}'
-            f'</div></div>',
-            unsafe_allow_html=True,
+    hero_html = (
+        f'<div class="luxury-hero-wrap" style="{bg_style}">'
+        f'<div class="luxury-hero-overlay"></div>'
+        f'<div class="luxury-hero-content">'
+        f'{badge_html}'
+        f'{logo_html}'
+        f'<div class="luxury-hero-title">{h_title}</div>'
+        f'<div class="luxury-hero-subtitle">{h_tagline}</div>'
+        f'{stats_html}'
+        f'</div></div>'
+    )
+    st.markdown(hero_html, unsafe_allow_html=True)
+
+
+def render_portal_spotlight():
+    """Render the portal intelligence spotlight banner."""
+    spotlight_html = (
+        '<div class="portal-spotlight-box">'
+        '<div class="portal-spotlight-header">'
+        '<div>'
+        '<h3 class="portal-spotlight-title">Precision Real Estate Intelligence for Gurugram</h3>'
+        '<div style="color:#968340; font-size:0.8rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; margin-top:2px;">'
+        'Audited Market Records & Algorithmic Valuations'
+        '</div>'
+        '</div>'
+        '<span class="portal-spotlight-badge">Decision Support Platform</span>'
+        '</div>'
+        '<div class="portal-spotlight-body">'
+        'EstateIQ delivers unbiased, machine-learning powered market valuations and recommendations '
+        'across 100+ sectors in Gurugram. Built on comprehensive registrar records and verified property listings, '
+        'the portal empowers buyers, investors, and homeowners with instant fair-value estimates, neighborhood '
+        'comparatives, and deep feature impact insights with zero guesswork.'
+        '</div>'
+        '<div style="display:flex; gap:0.8rem; flex-wrap:wrap;">'
+        '<a href="#valuation-calculator" class="portal-cta-btn">🔍 Calculate Market Price</a>'
+        '<a href="Recommendations" class="portal-cta-btn" style="background:#004274; border-color:#004274;">🏘️ Explore Recommendations</a>'
+        '</div>'
+        '</div>'
+    )
+    st.markdown(spotlight_html, unsafe_allow_html=True)
+
+
+# Backwards compatibility alias
+def render_plush_about_banner():
+    render_portal_spotlight()
+
+
+def render_featured_projects():
+    """Render Gurugram luxury projects with real photography (NO markdown indentation bugs)."""
+    projects = [
+        {
+            "title": "Sobha Crescent",
+            "address": "Sector-63A, Extension, Gurugram",
+            "price": "Starting From ₹5.75 Cr*",
+            "type": "Residential Projects",
+            "nri": True,
+            "img": "static/sobha_crescent.webp",
+        },
+        {
+            "title": "Whiteland Westin Residences",
+            "address": "Sector 103, Dwarka Expressway, Gurugram",
+            "price": "₹ 6.25 Crores",
+            "type": "Residential Projects",
+            "nri": True,
+            "img": "static/whiteland_resort.webp",
+        },
+        {
+            "title": "Tulip Melrose",
+            "address": "Sector 70, Southern Peripheral Rd, Gurugram",
+            "price": "₹ 4.43 Crores",
+            "type": "Residential Projects",
+            "nri": True,
+            "img": "static/tulip_melrose.jpg",
+        },
+        {
+            "title": "Silverglades The Legacy",
+            "address": "Sector 59, Golf Course Extn, Gurugram",
+            "price": "₹ 6.72 Crores",
+            "type": "Ultra Luxury Floors",
+            "nri": True,
+            "img": "static/silverglades_legacy.webp",
+        },
+        {
+            "title": "Whiteland Urban Cubes",
+            "address": "Sector 71, High Street Retail SCO, Gurugram",
+            "price": "₹ 3.60 Crores",
+            "type": "Commercial Projects",
+            "nri": False,
+            "img": "static/whiteland_cubes.webp",
+        },
+        {
+            "title": "Trevoc Royal Residence",
+            "address": "Sector 56, Golf Course Road, Gurugram",
+            "price": "Starting From ₹5.20 Cr*",
+            "type": "Residential Floors",
+            "nri": True,
+            "img": "static/trevoc_royal.webp",
+        },
+    ]
+
+    cards_parts = []
+    for p in projects:
+        data_uri = _image_to_base64(p["img"])
+        img_src = data_uri if data_uri else "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600"
+        nri_badge = '<span class="luxury-nri-pill">NRI Preferred</span>' if p["nri"] else ""
+        query = urllib.parse.quote_plus(f"{p['title']} {p['address']} Gurgaon property price")
+        link = f"https://www.google.com/search?q={query}"
+
+        card = (
+            '<div class="luxury-project-card">'
+            '<div class="luxury-project-img-wrap">'
+            '<div class="luxury-project-tag-wrap">'
+            '<span class="luxury-status-pill">Active Market</span>'
+            f'{nri_badge}'
+            '</div>'
+            f'<img class="luxury-project-img" src="{img_src}" alt="{p["title"]}" />'
+            '</div>'
+            '<div class="luxury-project-body">'
+            f'<div class="luxury-project-title">{p["title"]}</div>'
+            f'<div class="luxury-project-address">📍 {p["address"]}</div>'
+            f'<div class="luxury-project-price">{p["price"]}</div>'
+            f'<a href="{link}" target="_blank" rel="noopener noreferrer" class="luxury-project-btn">View Details →</a>'
+            '</div>'
+            '</div>'
         )
-    else:
-        # Fallback red gradient hero
-        st.markdown(
-            f'<div class="hero-portal-wrap">'
-            f'{badge_html}'
-            f'{logo_html}'
-            f'<div class="hero-page-title">{title}</div>'
-            f'<div class="hero-tagline">{tagline}</div>'
-            f'{stats_html}'
-            f'</div>',
-            unsafe_allow_html=True,
-        )
+        cards_parts.append(card)
+
+    cards_html = "".join(cards_parts)
+    full_section = (
+        '<div class="featured-section-header">'
+        '<h2 class="featured-section-title">Featured Developments in Gurugram</h2>'
+        '<div class="featured-section-subtitle">HIGH DEMAND LUXURY RESIDENTIAL & COMMERCIAL CORRIDORS</div>'
+        '</div>'
+        f'<div class="featured-projects-grid">{cards_html}</div>'
+    )
+    st.markdown(full_section, unsafe_allow_html=True)
+
+
+# Backwards compatibility alias
+def render_hot_selling_projects():
+    render_featured_projects()
 
 
 def render_feature_cards(cards):
-    """Render a grid of feature showcase cards.
-
-    *cards* is a list of dicts:
-        {"icon": "🏠", "title": "...", "desc": "...",
-         "tag": "EXPLORE →", "image": "/path/to/img.jpg", "link": "/Analytics"}
-    """
-    cards_html = ""
+    """Render feature cards showcasing portal features."""
+    cards_parts = []
     for c in cards:
         img_html = ""
         if c.get("image"):
@@ -820,93 +1213,133 @@ def render_feature_cards(cards):
             if data_uri:
                 img_html = f'<img class="feature-card-image" src="{data_uri}" alt="{c["title"]}" />'
             else:
-                # Gradient placeholder
-                img_html = (
-                    '<div class="feature-card-image" style="'
-                    'background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);'
-                    'height:160px;"></div>'
-                )
+                img_html = '<div class="feature-card-image" style="background:linear-gradient(135deg, #fdfaf3 0%, #f0ede6 100%); height:165px;"></div>'
+
         tag_html = f'<div class="feature-card-tag">{c.get("tag", "EXPLORE →")}</div>' if c.get("tag") else ""
         card_content = (
-            f'<div class="feature-card">'
+            '<div class="feature-card">'
             f'{img_html}'
-            f'<div class="feature-card-body">'
+            '<div class="feature-card-body">'
             f'<div class="feature-card-icon">{c.get("icon", "")}</div>'
             f'<div class="feature-card-title">{c["title"]}</div>'
             f'<div class="feature-card-desc">{c["desc"]}</div>'
             f'{tag_html}'
-            f'</div></div>'
+            '</div></div>'
         )
 
         link = c.get("link")
         target = c.get("target", "_self")
         if link:
-            cards_html += f'<a href="{link}" target="{target}" class="feature-card-link">{card_content}</a>'
+            cards_parts.append(f'<a href="{link}" target="{target}" class="feature-card-link">{card_content}</a>')
         else:
-            cards_html += card_content
+            cards_parts.append(card_content)
 
-    st.markdown(f'<div class="feature-grid">{cards_html}</div>', unsafe_allow_html=True)
+    full_grid = f'<div class="feature-grid">{"".join(cards_parts)}</div>'
+    st.markdown(full_grid, unsafe_allow_html=True)
 
 
 def render_gradient_divider():
-    """A clean separator divider with subtle gradient."""
+    """Gold-tinted gradient divider."""
     st.markdown('<div class="gradient-divider"></div>', unsafe_allow_html=True)
 
 
 def render_footer():
-    """Portal footer."""
-    st.markdown(
-        '<div class="site-footer">'
-        '<div class="footer-brand">EstateIQ Gurugram · Real Estate Intelligence Portal</div>'
-        'Estimates are ML model-generated for research and decision-support. '
-        'Verified against sector records in Gurugram, Haryana. © 2026'
-        '</div>',
-        unsafe_allow_html=True,
+    """Clean luxury dark footer with portal intelligence data (no third-party data)."""
+    footer_html = (
+        '<div class="luxury-footer">'
+        '<div class="luxury-footer-grid">'
+        '<div>'
+        '<div class="luxury-footer-brand-title">EstateIQ Gurugram</div>'
+        '<div class="luxury-footer-desc">'
+        'Machine learning-powered property valuation and real estate market intelligence '
+        'for Gurugram and Delhi-NCR. Providing transparent fair market value ranges, '
+        'geospatial micro-market analytics, and similarity-based property matching.'
+        '</div>'
+        '<div style="color:#9ca3af; font-size:0.82rem; line-height:1.6;">'
+        '📍 Gurugram, Haryana, India · Covering 100+ Sectors'
+        '</div>'
+        '</div>'
+        '<div>'
+        '<div class="luxury-footer-col-title">Portal Tools</div>'
+        '<ul class="luxury-footer-links">'
+        '<li><a href="#valuation-calculator">AI Market Valuation</a></li>'
+        '<li><a href="Recommendations">5-Angle Recommender</a></li>'
+        '<li><a href="Analytics">Geospatial Analytics</a></li>'
+        '<li><a href="Model_Insights">SHAP Explainability</a></li>'
+        '</ul>'
+        '</div>'
+        '<div>'
+        '<div class="luxury-footer-col-title">Corridors</div>'
+        '<ul class="luxury-footer-links">'
+        '<li><a href="Analytics">Golf Course Road</a></li>'
+        '<li><a href="Analytics">Golf Course Ext.</a></li>'
+        '<li><a href="Analytics">Dwarka Expressway</a></li>'
+        '<li><a href="Analytics">Southern Peripheral Rd</a></li>'
+        '</ul>'
+        '</div>'
+        '<div>'
+        '<div class="luxury-footer-col-title">Methodology</div>'
+        '<ul class="luxury-footer-links">'
+        '<li><a href="Model_Insights">Held-Out Test R² 0.927</a></li>'
+        '<li><a href="Model_Insights">Feature Contribution</a></li>'
+        '<li><a href="About">Dataset Overview</a></li>'
+        '<li><a href="About">Cleaning Pipeline</a></li>'
+        '</ul>'
+        '</div>'
+        '</div>'
+        '<div class="luxury-footer-bottom">'
+        '<div>© 2026 EstateIQ Gurugram. All Rights Reserved. Real Estate Intelligence Portal.</div>'
+        '<div>Valuation estimates are algorithmic approximations for research and decision-support.</div>'
+        '</div>'
+        '</div>'
     )
+    st.markdown(footer_html, unsafe_allow_html=True)
 
 
 def render_kpi_cards(kpis):
-    """Render a responsive row of KPI stat cards."""
-    cards_html = ""
+    """Render metric stat cards with gold accents."""
+    cards_parts = []
     for icon, value, label in kpis:
-        cards_html += (
-            f'<div class="kpi-card">'
+        cards_parts.append(
+            '<div class="kpi-card">'
             f'<div class="kpi-icon">{icon}</div>'
             f'<div class="kpi-value">{value}</div>'
-            f'<div class="kpi-label">{label}</div></div>'
+            f'<div class="kpi-label">{label}</div>'
+            '</div>'
         )
-    st.markdown(f'<div class="kpi-row">{cards_html}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="kpi-row">{"".join(cards_parts)}</div>', unsafe_allow_html=True)
 
 
 def render_prediction_result(low, point, high, r2=None, mae=None, built_up_area=None):
-    """Render the valuation panel."""
+    """Render the luxury valuation panel."""
     pps_html = ""
     if built_up_area and float(built_up_area) > 0:
         pps = (point * 1e7) / float(built_up_area)
-        pps_html = f'<div class="price-per-sqft">Avg Rate: ₹ {pps:,.0f} / sq ft</div>'
+        pps_html = f'<div class="price-per-sqft">Estimated Benchmark Rate: ₹ {pps:,.0f} / sq ft</div>'
 
-    st.markdown(f"""
-    <div class="prediction-panel">
-        <div class="prediction-header-badge">✓ ESTIMATED MARKET VALUE</div>
-        <div class="price-label">Expected Property Price</div>
-        <div class="price-main">₹ {point:.2f} Cr</div>
-        {pps_html}
-        <div class="price-range">
-            <div class="price-range-item">
-                <div class="price-range-value">₹ {low:.2f} Cr</div>
-                <div class="price-range-label">Fair Low</div>
-            </div>
-            <div class="price-range-item">
-                <div class="price-range-value">₹ {point:.2f} Cr</div>
-                <div class="price-range-label">Fair Value</div>
-            </div>
-            <div class="price-range-item">
-                <div class="price-range-value">₹ {high:.2f} Cr</div>
-                <div class="price-range-label">Fair High</div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    panel_html = (
+        '<div class="prediction-panel">'
+        '<div class="prediction-header-badge">✓ ESTIMATED FAIR MARKET VALUE</div>'
+        '<div class="price-label">Expected Property Price</div>'
+        f'<div class="price-main">₹ {point:.2f} Cr</div>'
+        f'{pps_html}'
+        '<div class="price-range">'
+        '<div class="price-range-item">'
+        f'<div class="price-range-value">₹ {low:.2f} Cr</div>'
+        '<div class="price-range-label">Fair Low</div>'
+        '</div>'
+        '<div class="price-range-item">'
+        f'<div class="price-range-value">₹ {point:.2f} Cr</div>'
+        '<div class="price-range-label">Fair Market Value</div>'
+        '</div>'
+        '<div class="price-range-item">'
+        f'<div class="price-range-value">₹ {high:.2f} Cr</div>'
+        '<div class="price-range-label">Fair High</div>'
+        '</div>'
+        '</div>'
+        '</div>'
+    )
+    st.markdown(panel_html, unsafe_allow_html=True)
 
 
 _REC_CARD_TYPES = {
@@ -926,44 +1359,77 @@ def get_card_type(section_title):
     return "match"
 
 
+# Mapping popular properties to real images in static/
+PROPERTY_IMAGE_MAP = {
+    "sobha": "static/sobha_crescent.webp",
+    "whiteland": "static/whiteland_resort.webp",
+    "tulip": "static/tulip_melrose.jpg",
+    "silverglades": "static/silverglades_legacy.webp",
+    "trevoc": "static/trevoc_royal.webp",
+    "adani": "static/sobha_crescent.webp",
+    "m3m": "static/plush_estate.jpg",
+    "smartworld": "static/plush_city_banner.jpg",
+    "dlf": "static/user_front_image.png",
+    "elan": "static/plush_luxury_hero.jpg",
+    "signature": "static/plush_estate.jpg",
+    "godrej": "static/plush_luxury_hero.jpg",
+    "emaar": "static/silverglades_legacy.webp",
+}
+
+
+def _get_property_thumbnail(name):
+    """Get a real image data-uri for a property based on its brand name."""
+    name_l = str(name).lower()
+    for key, path in PROPERTY_IMAGE_MAP.items():
+        if key in name_l and os.path.exists(path):
+            return _image_to_base64(path)
+    if os.path.exists("static/sobha_crescent.webp"):
+        return _image_to_base64("static/sobha_crescent.webp")
+    return None
+
+
 def render_rec_card(name, locality, bhk_configs, min_price, max_price, link,
                     card_type="match", featured=False):
-    """Render a property listing card."""
+    """Render a property listing card with real thumbnail & luxury gold styling."""
     bhk_html = "".join(f'<span class="bhk-badge">{b}</span>' for b in (bhk_configs or []))
     if min_price is not None and max_price is not None:
         import math
         if not (math.isnan(min_price) or math.isnan(max_price)):
             price_html = f'<span class="rec-price">₹ {min_price:.2f} – {max_price:.2f} Cr</span>'
         else:
-            price_html = '<span class="rec-price" style="color:#999;">Price on request</span>'
+            price_html = '<span class="rec-price" style="color:#888;">Price on request</span>'
     else:
-        price_html = '<span class="rec-price" style="color:#999;">Price on request</span>'
+        price_html = '<span class="rec-price" style="color:#888;">Price on request</span>'
 
-    import urllib.parse
     clean_locality = str(locality or 'Gurugram').replace('Sector ', 'Sector-')
-    search_query = urllib.parse.quote_plus(f"{name} {clean_locality} Gurgaon property 99acres")
+    search_query = urllib.parse.quote_plus(f"{name} {clean_locality} Gurgaon property price 99acres")
     safe_link = f"https://www.google.com/search?q={search_query}"
 
-    link_html = f'<a class="rec-link" href="{safe_link}" target="_blank" rel="noopener noreferrer">View Details ↗</a>'
-
+    link_html = f'<a class="rec-link" href="{safe_link}" target="_blank" rel="noopener noreferrer">Details →</a>'
     featured_html = '<span class="featured-tag">★ FEATURED</span>' if featured else ""
 
-    st.markdown(f"""
-    <div class="rec-card type-{card_type}">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start;
-                    flex-wrap:wrap; gap:0.6rem;">
-            <div style="flex:1; min-width:220px;">
-                <div class="rec-name">{name} <span class="verified-tag">✓ RERA / Verified</span>{featured_html}</div>
-                <div class="rec-locality">📍 {locality or 'Gurugram'}</div>
-                <div style="margin-top:0.5rem;">{bhk_html}</div>
-            </div>
-            <div style="text-align:right;">
-                {price_html}
-                <div style="margin-top:0.4rem;">{link_html}</div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    thumb_uri = _get_property_thumbnail(name)
+    img_tag = f'<img class="rec-thumb-img" src="{thumb_uri}" alt="{name}" />' if thumb_uri else ""
+
+    card_html = (
+        f'<div class="rec-card type-{card_type}">'
+        '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.9rem;">'
+        '<div style="display:flex; align-items:center; flex:1; min-width:240px;">'
+        f'{img_tag}'
+        '<div>'
+        f'<div class="rec-name">{name} <span class="verified-tag">✓ RERA</span>{featured_html}</div>'
+        f'<div class="rec-locality">📍 {locality or "Gurugram"}</div>'
+        f'<div style="margin-top:0.4rem;">{bhk_html}</div>'
+        '</div>'
+        '</div>'
+        '<div style="text-align:right;">'
+        f'{price_html}'
+        f'<div style="margin-top:0.35rem;">{link_html}</div>'
+        '</div>'
+        '</div>'
+        '</div>'
+    )
+    st.markdown(card_html, unsafe_allow_html=True)
 
 
 def render_sidebar_brand():
@@ -971,6 +1437,6 @@ def render_sidebar_brand():
     _render_sidebar()
 
 
-def render_header(tagline="Smart algorithmic price estimates for the Gurugram residential market"):
+def render_header(tagline="Algorithmic Property Valuation & Real Estate Intelligence"):
     """Legacy alias."""
     render_hero("EstateIQ Gurugram", tagline, show_logo=True)
