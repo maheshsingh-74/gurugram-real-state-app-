@@ -32,7 +32,7 @@ OUTLIER_INDICES = [44, 333, 501, 589, 641, 673, 845, 854, 949, 1018, 1104, 1165,
                    2496, 2579, 2670, 2672, 2673, 2676, 2710, 2743, 2775, 2869, 2948,
                    2952, 2969, 3167, 3249, 3275, 3388]
 
-st.set_page_config(page_title="Plush Homes LLP | Market Analytics", page_icon="📊", layout="wide")
+st.set_page_config(page_title="EstateIQ Gurugram | Market Analytics", page_icon="📊", layout="wide")
 apply_theme()
 render_plush_topbar()
 

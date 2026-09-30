@@ -1135,6 +1135,14 @@ def render_featured_projects():
             "img": "static/tulip_melrose.jpg",
         },
         {
+            "title": "DLF The Camellias",
+            "address": "Sector 42, Golf Course Road, Gurugram",
+            "price": "Starting From ₹18 Cr*",
+            "type": "Ultra Luxury Residences",
+            "nri": True,
+            "img": "static/dlf_camellias.jpg",
+        },
+        {
             "title": "Silverglades The Legacy",
             "address": "Sector 59, Golf Course Extn, Gurugram",
             "price": "₹ 6.72 Crores",
@@ -1143,20 +1151,12 @@ def render_featured_projects():
             "img": "static/silverglades_legacy.webp",
         },
         {
-            "title": "Whiteland Urban Cubes",
-            "address": "Sector 71, High Street Retail SCO, Gurugram",
-            "price": "₹ 3.60 Crores",
-            "type": "Commercial Projects",
-            "nri": False,
-            "img": "static/whiteland_cubes.webp",
-        },
-        {
-            "title": "Trevoc Royal Residence",
-            "address": "Sector 56, Golf Course Road, Gurugram",
-            "price": "Starting From ₹5.20 Cr*",
-            "type": "Residential Floors",
+            "title": "DLF The Crest",
+            "address": "Sector 54, Golf Course Road, Gurugram",
+            "price": "Starting From ₹6.5 Cr*",
+            "type": "Luxury Residential",
             "nri": True,
-            "img": "static/trevoc_royal.webp",
+            "img": "static/dlf_crest.jpg",
         },
     ]
 

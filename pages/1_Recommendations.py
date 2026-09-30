@@ -18,7 +18,7 @@ from branding import (
 
 ARTIFACT_PATH = os.path.join("recommender_artifacts", "recommender_artifacts.pkl")
 
-st.set_page_config(page_title="Plush Homes LLP | Property Recommendations", page_icon="🏘️", layout="wide")
+st.set_page_config(page_title="EstateIQ Gurugram | Property Recommendations", page_icon="🏘️", layout="wide")
 apply_theme()
 render_plush_topbar()
 

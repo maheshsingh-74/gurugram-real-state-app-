@@ -23,7 +23,7 @@ MODEL_PATH = os.path.join("models", "best_pipeline.joblib")
 TRENDS_CSV = "gurgaon_properties_post_feature_selection_v2.csv"
 
 st.set_page_config(
-    page_title="Plush Homes LLP | Model Insights & AI Transparency",
+    page_title="EstateIQ Gurugram | Model Insights & AI Transparency",
     page_icon="🔬",
     layout="wide",
 )
